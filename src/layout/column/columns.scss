@@ -1,0 +1,21 @@
+.base {
+  float: left;
+  padding: 0 20px;
+}
+
+.one_third,
+.one_half {
+  @extend .base;
+  width: 90%;
+}
+
+@media screen and (min-width: 675px) {
+  .one_third {
+    width: calc(100% / 3);
+    padding: 0;
+  }
+  .one_half {
+    width: calc(100% / 2);
+    padding: 0;
+  }
+}

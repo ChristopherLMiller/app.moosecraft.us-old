@@ -1,5 +1,29 @@
+@import 'colors';
+@import 'constants';
+
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.padding {
+  padding: 10px;
+}
+
+.copyright {
+  background-color: $darker-grey;
+  color: $light-grey;
+}
+
+.copyright p {
+  max-width: $max-width;
+  margin: 15px auto;
+  padding: 0 15px;
+}
+
+@media screen and (min-width: $max-width) {
+  .copyright p {
+    padding: 0;
+  }
 }

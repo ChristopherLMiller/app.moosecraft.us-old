@@ -2,7 +2,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 
 // Layout
+import Header from './layout/header';
 import Footer from './layout/footer';
+import Copyright from './layout/copyright';
 
 // Styling
 import './styles/styles.global.css';
@@ -31,42 +33,13 @@ export default () => (
       ]} />
 
     {/* Header */}
+    <Header />
 
     {/* Main Content Area */}
     <main>Content hahaha</main>
 
     {/* Footer */}
     <Footer />
+    <Copyright />
   </div>
 );
-
-/*
-    <Helmet
-      title="ReactQL application"
-      meta={[{
-        name: 'description',
-        content: 'ReactQL starter kit app',
-      }]} />
-    <div className={css.hello}>
-      <img src={logo} alt="ReactQL" className={css.logo} />
-    </div>
-    <hr />
-    <GraphQLMessage />
-    <hr />
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/page/about">About</Link></li>
-      <li><Link to="/page/contact">Contact</Link></li>
-    </ul>
-    <hr />
-    <Route exact path="/" component={Home} />
-    <Route path="/page/:name" component={Page} />
-    <hr />
-    <p>Runtime info:</p>
-    <Stats />
-    <hr />
-    <p>Stylesheet examples:</p>
-    <Styles />
-  </div>
-);
-*/
