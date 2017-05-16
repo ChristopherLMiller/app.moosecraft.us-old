@@ -8,7 +8,9 @@ import SocialIcon from '../../components/socialIcon';
 const Footer = () => (
   <footer className={css.footer}>
     <div className={css.row}>
-      <ColumnOneThird title="Server Statuses">
+      <ColumnOneThird title="Play Now">
+        <p>IP: MC.MOOSECRAFT.US</p>
+        <h3>Current Server Status</h3>
         <p>Moosecraft Status</p>
         <p>Mojang Status</p>
       </ColumnOneThird>
