@@ -13,8 +13,10 @@ const Footer = () => (
       <ColumnOneThird title="Play Now">
         <p>IP: MC.MOOSECRAFT.US</p>
         <h3>Current Server Status</h3>
-        <ServerStatus server="moosecraft" />
-        <ServerStatus server="mojang" />
+        <div className={css.statusWidget}>
+          <ServerStatus server="moosecraft" />
+          <ServerStatus server="mojang" />
+        </div>
       </ColumnOneThird>
       <ColumnOneThird title="Support Our Server">
         <p>While we run this server because we love the game and wouldn't trade it for anything

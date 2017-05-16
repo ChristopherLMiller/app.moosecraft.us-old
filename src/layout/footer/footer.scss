@@ -12,6 +12,19 @@ footer {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+
+    .statusWidget {
+      text-align: center;
+
+      button {
+        width: 100%;
+        max-width: 250px;
+        margin: 10px auto;
+        text-transform: uppercase;
+        cursor: default;
+      }
+    }
+
   }
 
   @media screen and (min-width: 675px) {
@@ -32,3 +45,4 @@ footer {
     text-align: center;
   }
 }
+

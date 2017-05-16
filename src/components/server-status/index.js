@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import css from '../../styles/styles.scss';
+
 class ServerStatus extends React.Component {
   constructor(props) {
     super(props);
@@ -18,8 +20,21 @@ class ServerStatus extends React.Component {
   }
 
   updateState(response) {
+    let interval = 0;
+    switch (response.data.status) {
+      case 'yellow':
+        interval = 30000;
+        break;
+      case 'red':
+        interval = 15000;
+        break;
+      default:
+        interval = 60000;
+        break;
+    }
     this.setState({
       status: response.data.status,
+      interval,
     });
   }
 
@@ -30,9 +45,24 @@ class ServerStatus extends React.Component {
   }
 
   render() {
-    return (
-      <div className={this.state.status}>IP: {this.props.server}</div>
-    );
+    switch (this.state.status) {
+      case 'green':
+        return (
+          <div className={css.green}><button>{this.props.server}</button></div>
+        );
+      case 'yellow':
+        return (
+          <div className={css.yellow}><button>{this.props.server}</button></div>
+        );
+      case 'red':
+        return (
+          <div className={css.red}><button>{this.props.server}</button></div>
+        );
+      default:
+        return (
+          <div><button>{this.props.server}</button></div>
+        );
+    }
   }
 }
 
