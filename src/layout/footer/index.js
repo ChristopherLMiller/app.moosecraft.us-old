@@ -4,6 +4,7 @@ import css from './footer.scss';
 
 import ColumnOneThird from '../column/one-third';
 import SocialIcon from '../../components/socialIcon';
+import ServerStatus from '../../components/server-status';
 
 const Footer = () => (
   <footer className={css.footer}>
@@ -11,8 +12,8 @@ const Footer = () => (
       <ColumnOneThird title="Play Now">
         <p>IP: MC.MOOSECRAFT.US</p>
         <h3>Current Server Status</h3>
-        <p>Moosecraft Status</p>
-        <p>Mojang Status</p>
+        <ServerStatus server="moosecraft" />
+        <ServerStatus server="mojang" />
       </ColumnOneThird>
       <ColumnOneThird title="Support Our Server">
         <p>While we run this server because we love the game and wouldn't trade it for anything

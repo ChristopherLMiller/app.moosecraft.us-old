@@ -1,18 +1,16 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Route } from 'react-router-dom';
 
 // Layout
 import Header from './layout/header';
 import Footer from './layout/footer';
 import Copyright from './layout/copyright';
 
-// Pages
-import Home from './pages/home';
-
 // Styling
 import './styles/styles.global.css';
 import css from './styles/styles.scss';
+
+import Routes from './pages/';
 
 // Export a simple component that allows clicking on list items to change
 // the route, along with a <Route> 'listener' that will conditionally display
@@ -40,9 +38,7 @@ export default () => (
     <Header />
 
     {/* Main Content Area */}
-    <main>
-      <Route exact path="/" component={Home} />
-    </main>
+    <Routes />
 
     {/* Footer */}
     <Footer />

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { STATIC } from '../../../config/project';
 
@@ -9,8 +10,8 @@ const SocialIcon = ({ network, link }) => (
 );
 
 SocialIcon.propTypes = {
-  network: React.PropTypes.string.isRequired,
-  link: React.PropTypes.string.isRequired,
+  network: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export default SocialIcon;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import css from './columns.scss';
 
@@ -12,8 +13,8 @@ const ColumnOneHalf = ({ title, children }) => (
 );
 
 ColumnOneHalf.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 export default ColumnOneHalf;
