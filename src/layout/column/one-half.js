@@ -14,7 +14,7 @@ const ColumnOneHalf = ({ title, children }) => (
 
 ColumnOneHalf.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]).isRequired,
 };
 
 export default ColumnOneHalf;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import css from './footer.scss';
+import global from '../../styles/styles.scss';
 
 import ColumnOneThird from '../column/one-third';
 import SocialIcon from '../../components/socialIcon';
@@ -22,12 +23,12 @@ const Footer = () => (
         <p>All donations received stay to the server itself, whether it be towards the internet
         bill, new hardware to allow more players to connect, or even professional builders,
         it all stays here!</p>
-        <p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" className={global.center}>
           <input type="hidden" name="cmd" value="_s-xclick" />
           <input type="hidden" name="hosted_button_id" value="XB9NGAP5CWAMW" />
           <button className="" type="submit" name="submit" alt="PayPal - The safer, easier way to pay online!">Donate Now</button>
           <img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-        </form></p>
+        </form>
       </ColumnOneThird>
       <ColumnOneThird title="Connect With Us">
         <p>
