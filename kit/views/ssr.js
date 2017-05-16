@@ -16,7 +16,7 @@ const Html = ({ head, html, state }) => (
       <meta httpEquiv="Content-Language" content="en" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {head.meta.toComponent()}
-      <link rel="stylesheet" href="/assets/css/style.css" />
+      <link rel="stylesheet" href="https://static.moosecraft.us/v2/css/style.css" />
       {head.title.toComponent()}
     </head>
     <body>
@@ -27,8 +27,8 @@ const Html = ({ head, html, state }) => (
         dangerouslySetInnerHTML={{
           __html: `window.__STATE__ = ${JSON.stringify(state)}`,
         }} />
-      <script defer src="/vendor.js" />
-      <script defer src="/browser.js" />
+      <script defer src="https://static.moosecraft.us/v2/js/vendor.js" />
+      <script defer src="https://static.moosecraft.us/v2/js/browser.js" />
     </body>
   </html>
 );
