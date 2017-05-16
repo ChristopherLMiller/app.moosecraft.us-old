@@ -8,11 +8,6 @@ main {
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     min-height: 1500px;
-    padding-top: 150px;
+    padding-top: 200px;
     background: #CCCCCC;
-}
-
-.one_third {
-  float: left;
-  width: 33%;
 }

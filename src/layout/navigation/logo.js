@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import css from './navigation.scss';
+
 const SiteLogo = ({ linkTo, children }) => (
-  <Link to={linkTo}>{children}</Link>
+  <Link to={linkTo} className={css.navLogo}>{children}</Link>
 );
 
 SiteLogo.propTypes = {
