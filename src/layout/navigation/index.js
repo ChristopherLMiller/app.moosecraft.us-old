@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import css from './navigation.scss';
 
@@ -12,30 +13,30 @@ const NavigationBar = () => (
       <SiteLogo linkTo="/"><img className={css.logo} alt="logo" src={`${STATIC.img}/logo.png`} /></SiteLogo>
     </div>
     <ul className={css.topLevel}>
-      <li><span className={css.label}>Join</span></li>
-      <li><span className={css.label}>About Us</span>
+      <li><NavLink to="/join"><span className={css.label}>Join</span></NavLink></li>
+      <li><NavLink to="#"><span className={css.label}>About Us</span></NavLink>
         <ul className={css.subNavigation}>
-          <li>Rules</li>
-          <li>Ranks</li>
-          <li>Commands</li>
-          <li>History</li>
-          <li>Who We Are</li>
-          <li>Goals</li>
-          <li>Blog</li>
+          <li><NavLink to="/rules">Rules</NavLink></li>
+          <li><NavLink to="/ranks">Ranks</NavLink></li>
+          <li><NavLink to="/commands">Commands</NavLink></li>
+          <li><NavLink to="/history">History</NavLink></li>
+          <li><NavLink to="/who-we-are">Who We Are</NavLink></li>
+          <li><NavLink to="/goals">Goals</NavLink></li>
+          <li><NavLink to="/blog">Blog</NavLink></li>
         </ul>
       </li>
       <li><span className={css.label}>Stats</span>
         <ul className={css.subNavigation}>
-          <li>Server</li>
-          <li>Player</li>
-          <li>Live Map</li>
+          <li><NavLink to="/stats/server">Server</NavLink></li>
+          <li><NavLink to="/stats/players">Player</NavLink></li>
+          <li><NavLink to="//dynmap.moosecraft.us">Live Map</NavLink></li>
         </ul>
       </li>
-      <li><span className={css.label}>Gallery</span></li>
-      <li><span className={css.label}>Forums</span></li>
-      <li><span className={css.label}>Contact</span></li>
-      <li><span className={css.label}>( )</span></li>
-      <li><span className={css.label}>( )</span></li>
+      <li><NavLink to="/gallery"><span className={css.label}>Gallery</span></NavLink></li>
+      <li><NavLink to="/forums"><span className={css.label}>Forums</span></NavLink></li>
+      <li><NavLink to="/contact"><span className={css.label}>Contact</span></NavLink></li>
+      <li><NavLink to="#"><span className={css.label}>(C)</span></NavLink></li>
+      <li><NavLink to="#"><span className={css.label}>(P)</span></NavLink></li>
     </ul>
   </navigation>
 );

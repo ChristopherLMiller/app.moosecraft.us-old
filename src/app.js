@@ -1,10 +1,14 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Route } from 'react-router-dom';
 
 // Layout
 import Header from './layout/header';
 import Footer from './layout/footer';
 import Copyright from './layout/copyright';
+
+// Pages
+import Home from './pages/home';
 
 // Styling
 import './styles/styles.global.css';
@@ -36,7 +40,9 @@ export default () => (
     <Header />
 
     {/* Main Content Area */}
-    <main>Content hahaha</main>
+    <main>
+      <Route exact path="/" component={Home} />
+    </main>
 
     {/* Footer */}
     <Footer />

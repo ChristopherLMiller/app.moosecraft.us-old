@@ -32,7 +32,7 @@ navigation {
       flex-direction: row;
 
       li {
-          margin: 0 20px;
+          margin: 0 15px;
           position: relative;
 
           &:hover {
@@ -41,6 +41,11 @@ navigation {
             .subNavigation {
               display: block;
             }
+          }
+
+          a {
+            text-decoration: none;
+            color: $dark-grey;
           }
 
           .label {
