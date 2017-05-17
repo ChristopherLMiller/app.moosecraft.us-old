@@ -8,7 +8,7 @@ import global from '../../styles/styles.scss';
 const ColumnOneFourth = ({ title, classes, children }) => {
   if (title) {
     return (
-      <div className={classNames(css.one_third, classes)}>
+      <div className={classNames(css.one_fourth, classes)}>
         <h3 className={global.center}>{title}</h3>
         <div className={css.content}>
           {children}
@@ -18,7 +18,7 @@ const ColumnOneFourth = ({ title, classes, children }) => {
   }
 
   return (
-    <div className={classNames(css.one_third, classes)}>
+    <div className={classNames(css.one_fourth, classes)}>
       <div className={css.content}>
         {children}
       </div>
