@@ -29,12 +29,13 @@ const ColumnOneFourth = ({ title, classes, children }) => {
 ColumnOneFourth.propTypes = {
   title: PropTypes.string,
   classes: PropTypes.className,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
 };
 
 ColumnOneFourth.defaultProps = {
   title: null,
   classes: null,
+  children: null,
 };
 
 export default ColumnOneFourth;
