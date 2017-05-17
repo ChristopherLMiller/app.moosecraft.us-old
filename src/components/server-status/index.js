@@ -16,7 +16,11 @@ class ServerStatus extends React.Component {
 
   componentDidMount() {
     this.loadStatus();
-    setInterval(this.loadStatus, this.state.interval);
+    this.timeout = setInterval(this.loadStatus, this.state.interval);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeout);
   }
 
   updateState(response) {
