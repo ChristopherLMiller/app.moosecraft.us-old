@@ -90,6 +90,7 @@
     "microseconds": "^0.1.0",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-apollo": "^1.0.0",
     "react-dom": "^15.4.2",
     "react-fontawesome": "^1.6.1",

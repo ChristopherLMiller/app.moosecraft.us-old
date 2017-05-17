@@ -4,6 +4,7 @@ import FontAwesome from 'react-fontawesome';
 import classNames from 'classnames';
 
 import ColumnOneThird from '../../layout/column/one-third';
+import Separator from '../../components/separator';
 
 import css from './home.scss';
 import global from '../../styles/styles.scss';
@@ -15,6 +16,7 @@ const Home = () => (
         <title>Home</title>
       </Helmet>
     </div>
+    <Separator height="20" color="#CCCCCC" />
 
     <div className={global.row}>
       <ColumnOneThird title="66 Unique Players" classes={classNames(global.background_white, global.box_shadow)}>
