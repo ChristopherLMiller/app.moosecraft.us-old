@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import css from './columns.scss';
 import global from '../../styles/styles.scss';
 
-const ColumnOneHalf = ({ title, classes, children }) => (
-  <div className={classNames(css.one_half, classes)}>
+const ColumnTwoThird = ({ title, classes, children }) => (
+  <div className={classNames(css.two_third, classes)}>
     <h3 className={global.center}>{title}</h3>
     <div className="content">
       {children}
@@ -14,15 +14,15 @@ const ColumnOneHalf = ({ title, classes, children }) => (
   </div>
 );
 
-ColumnOneHalf.propTypes = {
-  title: PropTypes.string.isRequired,
-  classes: PropTypes.className,
+ColumnTwoThird.propTypes = {
+  title: PropTypes.string,
+  classes: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]).isRequired,
 };
 
-ColumnOneHalf.defaultProps = {
+ColumnTwoThird.defaultProps = {
   title: '',
   classes: null,
 };
 
-export default ColumnOneHalf;
+export default ColumnTwoThird;

@@ -29,7 +29,7 @@ const NavigationBar = () => (
         <ul className={css.subNavigation}>
           <li><NavLink to="/stats/server">Server</NavLink></li>
           <li><NavLink to="/stats/players">Player</NavLink></li>
-          <li><NavLink to="//dynmap.moosecraft.us">Live Map</NavLink></li>
+          <li><a href="https://dynmap.moosecraft.us">Live Map</a></li>
         </ul>
       </li>
       <li><NavLink to="/gallery"><span className={css.label}>Gallery</span></NavLink></li>

@@ -1,5 +1,6 @@
 /* Insert site global styles here */
 @import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 @import 'normalize.css';
 
@@ -8,4 +9,8 @@ main {
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     background: #CCCCCC;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Lato, sans-serif;
 }
