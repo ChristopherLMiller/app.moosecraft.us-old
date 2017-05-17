@@ -14,9 +14,9 @@ const Routes = () => (
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/join" component={Join} />
-        <Route component={NotFound} />
+        <Route location={location} exact path="/" component={Home} />
+        <Route location={location} path="/join" component={Join} />
+        <Route location={location} component={NotFound} />
       </Switch>
     </ReactCSSTransitionGroup>
   </main>
