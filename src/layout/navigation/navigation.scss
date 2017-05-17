@@ -59,10 +59,41 @@ navigation {
           .subNavigation {
               display: none;
               position: absolute;
-              bottom: -100%;
-              left: 0;
+              list-style-type: none;
+              padding-left: 0;
+              background: $white;
+              width: 150px;
+              margin-top: 20px;
+              left: 50%;
+              transform: translateX(-50%);
+
+              &:before {
+                content: '\A';
+                position: absolute;
+                top: -20px;
+                width: 0;
+                height: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-bottom: 20px solid white;
+              }
+
+              li {
+                font-size: 18px;
+                padding:10px;
+                margin: 0 !important;
+                text-align: center;
+                position: relative;
+
+                &:hover {
+                  border-bottom: none !important;
+                  left: 10px;
+                  transition: left 1s ease 0s;
+                }
+              }
           }
-          
       }
   }
 }
