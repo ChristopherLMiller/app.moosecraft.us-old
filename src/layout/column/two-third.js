@@ -5,14 +5,26 @@ import classNames from 'classnames';
 import css from './columns.scss';
 import global from '../../styles/styles.scss';
 
-const ColumnTwoThird = ({ title, classes, children }) => (
-  <div className={classNames(css.two_third, classes)}>
-    <h3 className={global.center}>{title}</h3>
-    <div className="content">
-      {children}
+const ColumnTwoThird = ({ title, classes, children }) => {
+  if (title) {
+    return (
+      <div className={classNames(css.one_third, classes)}>
+        <h3 className={global.center}>{title}</h3>
+        <div className={css.content}>
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={classNames(css.one_third, classes)}>
+      <div className={css.content}>
+        {children}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 ColumnTwoThird.propTypes = {
   title: PropTypes.string,
@@ -21,7 +33,7 @@ ColumnTwoThird.propTypes = {
 };
 
 ColumnTwoThird.defaultProps = {
-  title: '',
+  title: null,
   classes: null,
 };
 

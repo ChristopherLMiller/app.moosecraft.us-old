@@ -14,3 +14,13 @@ main {
 h1, h2, h3, h4, h5, h6 {
     font-family: Lato, sans-serif;
 }
+
+main p {
+    font-family: Raleway, sans-serif;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+main h3 {
+    font-size: 2em;
+    margin: 10px 0;
+}

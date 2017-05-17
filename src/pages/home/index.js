@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import FontAwesome from 'react-fontawesome';
+import classNames from 'classnames';
 
 import ColumnOneThird from '../../layout/column/one-third';
 
@@ -16,23 +17,23 @@ const Home = () => (
     </div>
 
     <div className={global.row}>
-      <ColumnOneThird title="66 Unique Players" classes={global.background_white}>
+      <ColumnOneThird title="66 Unique Players" classes={classNames(global.background_white, global.box_shadow)}>
         <div className={global.center}>
-          <FontAwesome name="user" size="4x" />
+          <FontAwesome name="user" style={{ fontSize: '6em', color: '#CCCCCC' }} />
           <p>Players that have joined the server</p>
         </div>
       </ColumnOneThird>
 
-      <ColumnOneThird title="894 Hours Played" classes={global.background_white}>
+      <ColumnOneThird title="894 Hours Played" classes={classNames(global.background_white, global.box_shadow)}>
         <div className={global.center}>
-          <FontAwesome name="clock-o" size="4x" />
+          <FontAwesome name="clock-o" style={{ fontSize: '6em', color: '#CCCCCC' }} />
           <p>Hours of game play logged</p>
         </div>
       </ColumnOneThird>
 
-      <ColumnOneThird title="4495395 Meters" classes={global.background_white}>
+      <ColumnOneThird title="4495395 Meters" classes={classNames(global.background_white, global.box_shadow)}>
         <div className={global.center}>
-          <FontAwesome name="line-chart" size="4x" />
+          <FontAwesome name="line-chart" style={{ fontSize: '6em', color: '#CCCCCC' }} />
           <p>How far players have traveled in game</p>
         </div>
       </ColumnOneThird>
