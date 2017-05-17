@@ -15,6 +15,10 @@
   padding: 10px;
 }
 
+.top_padding {
+  padding-top: 200px;
+}
+
 .copyright {
   background-color: $darker-grey;
   color: $light-grey;
@@ -49,4 +53,22 @@ button {
 }
 .yellow button {
   background: $status_yellow;
+}
+
+.row {
+  max-width: $max-width;
+  margin: 50px auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 675px) {
+  .row {
+    flex-direction: row;
+  }
+}
+
+.background_white {
+  background: $white;
 }

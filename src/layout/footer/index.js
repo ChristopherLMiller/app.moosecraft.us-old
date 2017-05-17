@@ -9,7 +9,7 @@ import ServerStatus from '../../components/server-status';
 
 const Footer = () => (
   <footer className={css.footer}>
-    <div className={css.row}>
+    <div className={global.row}>
       <ColumnOneThird title="Play Now">
         <p>IP: MC.MOOSECRAFT.US</p>
         <h3>Current Server Status</h3>

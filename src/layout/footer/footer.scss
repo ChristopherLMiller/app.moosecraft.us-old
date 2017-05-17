@@ -6,30 +6,15 @@ footer {
   color: $white;
   z-index: 900;
 
-  .row {
-    max-width: $max-width;
-    margin: 50px auto;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  .statusWidget {
+    text-align: center;
 
-    .statusWidget {
-      text-align: center;
-
-      button {
-        width: 100%;
-        max-width: 250px;
-        margin: 10px auto;
-        text-transform: uppercase;
-        cursor: default;
-      }
-    }
-
-  }
-
-  @media screen and (min-width: 675px) {
-    .row {
-      flex-direction: row;
+    button {
+      width: 100%;
+      max-width: 250px;
+      margin: 0 auto 10px auto;
+      text-transform: uppercase;
+      cursor: default;
     }
   }
 

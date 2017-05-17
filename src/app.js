@@ -18,7 +18,8 @@ import Routes from './pages/';
 export default () => (
   <div className={css.app}>
     <Helmet
-      title="Moosecraft.us"
+      titleTemplate="Moosecraft.us - %s"
+      defaultTitle="Home"
       meta={[
         {
           name: 'description',
