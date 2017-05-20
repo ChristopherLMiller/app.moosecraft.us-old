@@ -3,8 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Pages
-import Home from './home';
-import Join from './join';
+import HomePage from './home';
+import JoinPage from './join';
+import RulesPage from './about-us/rules';
+
 import NotFound from './not-found';
 
 const Routes = () => (
@@ -14,9 +16,10 @@ const Routes = () => (
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}>
       <Switch>
-        <Route location={location} exact path="/" component={Home} />
-        <Route location={location} path="/join" component={Join} />
-        <Route location={location} component={NotFound} />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/join" component={JoinPage} />
+        <Route path="/rules" component={RulesPage} />
+        <Route component={NotFound} />
       </Switch>
     </ReactCSSTransitionGroup>
   </main>

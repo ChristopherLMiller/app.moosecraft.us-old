@@ -36,6 +36,8 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
     ],
   },
 
+  devtool: 'cheap-module-source-map',
+
   // Set-up some common mocks/polyfills for features available in node, so
   // the browser doesn't balk when it sees this stuff
   node: {

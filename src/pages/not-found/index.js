@@ -1,12 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import ColumnOneHalf from '../../layout/column/one-half';
 import ColumnOneFourth from '../../layout/column/one-fourth';
 import global from '../../styles/styles.scss';
 
-const NotFound = () => (
+const NotFound = ({ location }) => (
   <div>
     <div className={global.top_padding} />
     <div className={global.row}>
@@ -28,5 +29,9 @@ const NotFound = () => (
     </Helmet>
   </div>
 );
+
+NotFound.propTypes = {
+  location: PropTypes.string.isRequired,
+};
 
 export default NotFound;

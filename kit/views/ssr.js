@@ -17,9 +17,11 @@ const Html = ({ head, html, state }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {head.meta.toComponent()}
       <link rel="stylesheet" href="/assets/css/style.css" />
+      <link type="text/plain" rel="author" href="https://static.moosecraft.us/v2/humans.txt" />
+      <link rel="manifest" href="https://static.moosecraft.us/v2/manifest.json" />
       {head.title.toComponent()}
     </head>
-    <body>
+    <body {...head.bodyAttributes.toComponent()}>
       <div
         id="main"
         dangerouslySetInnerHTML={{ __html: html }} />

@@ -2,19 +2,19 @@
 @import '../../styles/colors.scss';
 
 navigation {
-    max-width: $max-width;
+    max-width: $max_width;
     width: 100%;
     max-height: 100px;
     height: 100%;
     position: fixed;
     top: 50px;
     background: $white;
-    opacity: 0.8;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    z-index: 9999;
 
     .logoWrapper {
       .logo {
@@ -95,5 +95,18 @@ navigation {
               }
           }
       }
+  }
+}
+
+/* Home page specifics */
+.home navigation {
+    position: absolute;
+    top: calc(100vh - 150px);
+    opacity: 0.8;
+
+  &.sticky {
+    position: fixed;
+    top: 50px;
+    opacity: 1;
   }
 }

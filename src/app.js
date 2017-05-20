@@ -33,6 +33,10 @@ export default () => (
           name: 'theme-color',
           content: '#4CAF50',
         },
+        {
+          name: 'msapplication-config',
+          content: 'https://static.moosecraft.us/v2/browserconfig.xml',
+        },
       ]} />
 
     {/* Header */}

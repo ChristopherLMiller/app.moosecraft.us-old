@@ -8,7 +8,7 @@ import BackgroundImage from '../../components/background-image';
 
 import global from '../../styles/styles.scss';
 
-const Join = () => (
+const JoinPage = () => (
   <div>
     <div className={global.top_padding} />
     <div className={global.row}>
@@ -28,4 +28,4 @@ const Join = () => (
   </div>
 );
 
-export default Join;
+export default JoinPage;

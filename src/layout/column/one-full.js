@@ -28,7 +28,7 @@ const ColumnOneFull = ({ title, classes, children }) => {
 
 ColumnOneFull.propTypes = {
   title: PropTypes.string,
-  classes: PropTypes.className,
+  classes: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
 };
 

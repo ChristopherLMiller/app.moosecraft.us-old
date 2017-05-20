@@ -4,19 +4,14 @@ import FontAwesome from 'react-fontawesome';
 import classNames from 'classnames';
 
 import ColumnOneThird from '../../layout/column/one-third';
-import Separator from '../../components/separator';
 
 import css from './home.scss';
 import global from '../../styles/styles.scss';
+import nav from '../../layout/navigation/navigation.scss';
 
-const Home = () => (
+const HomePage = () => (
   <div>
-    <div className={css.hero}>
-      <Helmet>
-        <title>Home</title>
-      </Helmet>
-    </div>
-    <Separator height="20" color="#CCCCCC" />
+    <div className={css.hero} />
 
     <div className={global.row}>
       <ColumnOneThird title="66 Unique Players" classes={classNames(global.background_white, global.box_shadow)}>
@@ -40,7 +35,12 @@ const Home = () => (
         </div>
       </ColumnOneThird>
     </div>
+
+    <Helmet>
+      <title>Home</title>
+      <body className={nav.home} />
+    </Helmet>
   </div>
 );
 
-export default Home;
+export default HomePage;
