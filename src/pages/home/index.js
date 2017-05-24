@@ -3,42 +3,53 @@ import Helmet from 'react-helmet';
 import FontAwesome from 'react-fontawesome';
 import classNames from 'classnames';
 
-import ColumnOneThird from '../../layout/column/one-third';
+import Column from 'src/layout/column';
+import PageTitle from 'src/components/page-title';
 
+
+import styles from 'src/styles/styles.scss';
 import css from './home.scss';
-import global from '../../styles/styles.scss';
-import nav from '../../layout/navigation/navigation.scss';
 
 const HomePage = () => (
   <div>
     <div className={css.hero} />
 
-    <div className={global.row}>
-      <ColumnOneThird title="66 Unique Players" classes={classNames(global.background_white, global.box_shadow)}>
-        <div className={global.center}>
-          <FontAwesome name="user" style={{ fontSize: '6em', color: '#CCCCCC' }} />
-          <p>Players that have joined the server</p>
-        </div>
-      </ColumnOneThird>
+    <div className={classNames(styles.container, styles.full_width, styles.background_grey)}>
+      <div className={styles.row}>
+        <Column classes={styles.one_full}>
+          <PageTitle title="Welcome to Moosecraft" />
+        </Column>
+      </div>
+    </div>
 
-      <ColumnOneThird title="894 Hours Played" classes={classNames(global.background_white, global.box_shadow)}>
-        <div className={global.center}>
-          <FontAwesome name="clock-o" style={{ fontSize: '6em', color: '#CCCCCC' }} />
-          <p>Hours of game play logged</p>
-        </div>
-      </ColumnOneThird>
+    <div className={classNames(styles.container, styles.box_width)}>
+      <div className={styles.row}>
+        <Column title="66 Unique Players" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+          <div className={styles.center}>
+            <FontAwesome name="user" className={styles.text_grey} style={{ fontSize: '6em' }} />
+            <p>Players that have joined the server</p>
+          </div>
+        </Column>
 
-      <ColumnOneThird title="4495395 Meters" classes={classNames(global.background_white, global.box_shadow)}>
-        <div className={global.center}>
-          <FontAwesome name="line-chart" style={{ fontSize: '6em', color: '#CCCCCC' }} />
-          <p>How far players have traveled in game</p>
-        </div>
-      </ColumnOneThird>
+        <Column title="894 Hours Played" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+          <div className={styles.center}>
+            <FontAwesome name="clock-o" className={styles.text_grey} style={{ fontSize: '6em' }} />
+            <p>Hours of game play logged</p>
+          </div>
+        </Column>
+
+        <Column title="4495395 Meters" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+          <div className={styles.center}>
+            <FontAwesome name="line-chart" className={styles.text_grey} style={{ fontSize: '6em' }} />
+            <p>How far players have traveled in game</p>
+          </div>
+        </Column>
+      </div>
     </div>
 
     <Helmet>
       <title>Home</title>
-      <body className={nav.home} />
+      <body className={styles.home} />
     </Helmet>
   </div>
 );

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import css from './navigation.scss';
+import styles from 'src/styles/styles.scss';
 
 const SiteLogo = ({ linkTo, children }) => (
-  <Link to={linkTo} className={css.navLogo}>{children}</Link>
+  <Link to={linkTo} className={styles.navLogo}>{children}</Link>
 );
 
 SiteLogo.propTypes = {

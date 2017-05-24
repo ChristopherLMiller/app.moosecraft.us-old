@@ -1,11 +1,11 @@
 import React from 'react';
 
-import css from './header.scss';
+import header from 'src/styles/header.scss';
 
-import NavigationBar from '../../layout/navigation';
+import NavigationBar from 'src/layout/navigation';
 
 const Header = () => (
-  <div className={css.navWrapper}>
+  <div className={header.navWrapper}>
     <NavigationBar />
   </div>
 );

@@ -1,19 +1,20 @@
 import React from 'react';
+import classNames from 'classnames';
 
-import css from './footer.scss';
-import global from '../../styles/styles.scss';
+import footer from 'src/styles/footer.scss';
+import styles from 'src/styles/styles.scss';
 
-import ColumnOneThird from '../column/one-third';
+import ColumnOneThird from 'src/layout/column';
 import SocialIcon from '../../components/socialIcon';
 import ServerStatus from '../../components/server-status';
 
 const Footer = () => (
-  <footer className={css.footer}>
-    <div className={global.row}>
+  <footer className={classNames(footer.footer, styles.box_width)}>
+    <div className={styles.row}>
       <ColumnOneThird title="Play Now">
         <p>IP: MC.MOOSECRAFT.US</p>
         <h3>Current Server Status</h3>
-        <div className={css.statusWidget}>
+        <div className={footer.statusWidget}>
           <ServerStatus server="moosecraft" />
           <ServerStatus server="mojang" />
         </div>
@@ -25,7 +26,7 @@ const Footer = () => (
         <p>All donations received stay to the server itself, whether it be towards the internet
         bill, new hardware to allow more players to connect, or even professional builders,
         it all stays here!</p>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" className={global.center}>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" className={styles.center}>
           <input type="hidden" name="cmd" value="_s-xclick" />
           <input type="hidden" name="hosted_button_id" value="XB9NGAP5CWAMW" />
           <button className="" type="submit" name="submit" alt="PayPal - The safer, easier way to pay online!">Donate Now</button>

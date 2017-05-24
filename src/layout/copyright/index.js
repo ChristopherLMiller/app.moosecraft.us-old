@@ -1,9 +1,9 @@
 import React from 'react';
 
-import css from '../../styles/styles.scss';
+import styles from 'src/styles/styles.scss';
 
 const Copyright = () => (
-  <div className={css.copyright}>
+  <div className={styles.copyright}>
     <p>&copy; Copyright {new Date().getFullYear()} Moosecraft</p>
   </div>
 );

@@ -3,25 +3,24 @@ import Helmet from 'react-helmet';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import ColumnOneHalf from '../../layout/column/one-half';
-import ColumnOneFourth from '../../layout/column/one-fourth';
-import global from '../../styles/styles.scss';
+import Column from 'src/layout/column';
+import styles from 'src/styles/styles.scss';
 
 const NotFound = ({ location }) => (
   <div>
-    <div className={global.top_padding} />
-    <div className={global.row}>
-      <ColumnOneFourth classes={global.hide_small}>
+    <div className={styles.top_padding} />
+    <div className={styles.row}>
+      <Column classes={styles.hide_small}>
         <img src="https://static.moosecraft.us/v2/img/creeper.png" alt="creeper" style={{ height: '200px', float: 'right' }} />
-      </ColumnOneFourth>
-      <ColumnOneHalf title="404 Not Found" classes={classNames(global.background_white, global.box_shadow)}>
+      </Column>
+      <Column title="404 Not Found" classes={classNames(styles.background_white, styles.box_shadow)}>
         <p>The page you are looking for was not found.  Sorry about that.</p>
         <p>If you feel this is in error please report this to <a href="mailto:admin@moosecraft.us">admin@moosecraft.us</a></p>
         <p>Additionally for reference the page requested was: {location.pathname}</p>
-      </ColumnOneHalf>
-      <ColumnOneFourth classes={global.hide_small}>
+      </Column>
+      <Column classes={styles.hide_small}>
         <img src="https://static.moosecraft.us/v2/img/creeper.png" alt="creeper" style={{ height: '200px', transform: 'rotateY(180deg)' }} />
-      </ColumnOneFourth>
+      </Column>
     </div>
 
     <Helmet>

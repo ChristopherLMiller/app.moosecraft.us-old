@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { STATIC } from '../../../config/project';
+import { STATIC } from 'config/project';
 
-import css from '../../styles/styles.scss';
+import styles from 'src/styles/styles.scss';
 
 const SocialIcon = ({ network, link }) => (
-  <a href={link}><img src={`${STATIC.img}/social/${network}.png`} alt={network} className={css.padding} /></a>
+  <a href={link}><img src={`${STATIC.img}/social/${network}.png`} alt={network} className={styles.padding} /></a>
 );
 
 SocialIcon.propTypes = {

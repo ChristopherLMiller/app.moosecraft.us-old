@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import css from '../../styles/styles.scss';
+import styles from 'src/styles/styles.scss';
 
 class ServerStatus extends React.Component {
   constructor(props) {
@@ -52,15 +52,15 @@ class ServerStatus extends React.Component {
     switch (this.state.status) {
       case 'green':
         return (
-          <div className={css.green}><button>{this.props.server}</button></div>
+          <div className={styles.green}><button>{this.props.server}</button></div>
         );
       case 'yellow':
         return (
-          <div className={css.yellow}><button>{this.props.server}</button></div>
+          <div className={styles.yellow}><button>{this.props.server}</button></div>
         );
       case 'red':
         return (
-          <div className={css.red}><button>{this.props.server}</button></div>
+          <div className={styles.red}><button>{this.props.server}</button></div>
         );
       default:
         return (

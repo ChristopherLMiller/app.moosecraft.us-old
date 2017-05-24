@@ -8,7 +8,7 @@ import Copyright from './layout/copyright';
 
 // Styling
 import './styles/styles.global.css';
-import css from './styles/styles.scss';
+import styles from './styles/styles.scss';
 
 import Routes from './pages/';
 
@@ -16,7 +16,7 @@ import Routes from './pages/';
 // the route, along with a <Route> 'listener' that will conditionally display
 // the <Page> component based on the route name
 export default () => (
-  <div className={css.app}>
+  <div className={styles.app}>
     <Helmet
       titleTemplate="Moosecraft.us - %s"
       defaultTitle="Home"

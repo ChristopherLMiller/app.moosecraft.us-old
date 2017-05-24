@@ -2,50 +2,49 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
 
-import ColumnOneFull from '../../../layout/column/one-full';
-import ColumnOneHalf from '../../../layout/column/one-half';
+import Column from 'src/layout/column';
 
-import global from '../../../styles/styles.scss';
+import styles from 'src/styles/styles.scss';
 
 const RulesPage = () => (
   <div>
-    <div className={global.top_padding} />
-    <div className={global.row}>
-      <ColumnOneFull title="Server Rules" classes={classNames(global.background_white, global.box_shadow)}>
+    <div className={styles.top_padding} />
+    <div className={styles.row}>
+      <Column title="Server Rules" classes={classNames(styles.background_white, styles.box_shadow)}>
         <p>The following rules must be read and adhered to at all times while playing on our server.
-        Breaking the rules will result in jail time up to and including global minecraft server
+        Breaking the rules will result in jail time up to and including styles minecraft server
         bans.</p>
-      </ColumnOneFull>
+      </Column>
     </div>
 
-    <div className={global.row}>
-      <ColumnOneHalf title="group 1" classes={classNames(global.background_white, global.box_shadow)}>
+    <div className={styles.row}>
+      <Column title="group 1" classes={classNames(styles.background_white, styles.box_shadow)}>
         <ul>
           <li>Rule #1</li>
           <li>Rule #2</li>
         </ul>
-      </ColumnOneHalf>
-      <ColumnOneHalf title="group 1" classes={classNames(global.background_white, global.box_shadow)}>
+      </Column>
+      <Column title="group 1" classes={classNames(styles.background_white, styles.box_shadow)}>
         <ul>
           <li>Rule #1</li>
           <li>Rule #2</li>
         </ul>
-      </ColumnOneHalf>
+      </Column>
     </div>
 
-    <div className={global.row}>
-      <ColumnOneHalf title="group 1" classes={classNames(global.background_white, global.box_shadow)}>
+    <div className={styles.row}>
+      <Column title="group 1" classes={classNames(styles.background_white, styles.box_shadow)}>
         <ul>
           <li>Rule #1</li>
           <li>Rule #2</li>
         </ul>
-      </ColumnOneHalf>
-      <ColumnOneHalf title="group 1" classes={classNames(global.background_white, global.box_shadow)}>
+      </Column>
+      <Column title="group 1" classes={classNames(styles.background_white, styles.box_shadow)}>
         <ul>
           <li>Rule #1</li>
           <li>Rule #2</li>
         </ul>
-      </ColumnOneHalf>
+      </Column>
     </div>
 
     <Helmet>

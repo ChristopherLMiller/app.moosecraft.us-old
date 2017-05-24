@@ -1,3 +1,32 @@
+@import 'constants';
+
+.container {
+  margin: 0 auto 30px 0;
+  padding: 30px 50px;
+
+  .full_width {
+    width:100%;
+  }
+
+  .box_width {
+    max-width: $max-width;
+  }
+
+  .row {
+    max-width: $max-width;
+    margin: 50px auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 675px) {
+    .row {
+      flex-direction: row;
+    }
+  }
+}
+
 .column_base {
   margin: 20px;
   padding: 30px;
@@ -27,3 +56,6 @@
   flex-basis: 100%;
   @extend .column_base;
 }
+
+
+

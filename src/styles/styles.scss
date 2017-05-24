@@ -3,6 +3,13 @@
 @import 'functions';
 @import 'mixins';
 
+/* Site Navigation */
+@import 'navigation';
+
+* {
+    box-sizing: border-box;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -57,23 +64,7 @@ button {
   background: $status_yellow;
 }
 
-.row {
-  max-width: $max-width;
-  margin: 50px auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
 
-@media screen and (min-width: 675px) {
-  .row {
-    flex-direction: row;
-  }
-}
-
-.background_white {
-  background: $white;
-}
 
 .box_shadow {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -107,4 +98,51 @@ button {
 
 main {
   @include fluid-type($min_width, $max_width, $min_font, $max_font);
+  flex: 1 0 auto;
+  background: url('https://static.moosecraft.us/v2/img/sky.png') no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
+
+/* Background colors */
+.background_white {
+  background: $white;
+}
+.background_darker_grey {
+  background: $darker-grey;
+}
+.background_black {
+  background: $black;
+}
+.background_dark_grey {
+  background: $dark-grey;
+}
+.background_light_grey {
+  background: $light-grey;
+}
+.background_red {
+  background: $status_red;
+}
+.background_green {
+  background: $status_green;
+}
+.background_yellow {
+  background: $status_yellow;
+}
+.background_grey {
+  background: $grey;
+}
+
+/* Text Colors */
+.text_white {
+  color: $white;
+}
+.text_black {
+  color: $black;
+}
+.text_grey {
+  color: $grey;
+}
+
+/* Layout settings */
+@import 'layout';
