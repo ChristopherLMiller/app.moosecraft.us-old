@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const BackgroundImage = ({ url }) => (
-  <div style={{ background: `url(${url}) no-repeat`, backgroundSize: 'cover', height: '100%' }} />
+  <div style={{ background: `url(${url}) no-repeat center center`, backgroundSize: 'cover', height: '100%' }} />
 );
 
 BackgroundImage.propTypes = {

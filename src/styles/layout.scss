@@ -1,7 +1,8 @@
 @import 'constants';
 
+// general layout component
 .container {
-  margin: 0 auto 30px 0;
+  margin: 0;
   padding: 30px 50px;
 
   .full_width {
@@ -27,35 +28,39 @@
   }
 }
 
+.content_base {
+  height: 100%;
+}
+
 .column_base {
   margin: 20px;
   padding: 30px;
 }
 
-.content {
-  height: 100%;
+.one_half, .one_third, .two_third, .one_fourth, .one_full {
+  flex-basis: 100%;
+  @extend .column_base
 }
 
-.one_half {
-  flex-basis: calc(100% / 2);
-  @extend .column_base;
+@media screen and (min-width: 675px) {
+  .one_half {
+    flex-basis: calc(100% / 2);
+  }
+  .one_third {
+    flex-basis: calc(100% * (1/3));
+  }
+  .two_third {
+    flex-basis: calc(100% * (2/3));
+  }
+  .one_fourth {
+    flex-basis: calc(100% * (1/4));
+  }
+  .one_full {
+    flex-basis: 100%;
+  }
 }
-.one_third {
-  flex-basis: calc(100% * (1/3));
-  @extend .column_base;
-}
-.two_third {
-  flex-basis: calc(100% * (2/3));
-  @extend .column_base;
-}
-.one_fourth {
-  flex-basis: calc(100% * (1/4));
-  @extend .column_base;
-}
-.one_full {
-  flex-basis: 100%;
-  @extend .column_base;
-}
+
+
 
 
 

@@ -6,6 +6,9 @@
 /* Site Navigation */
 @import 'navigation';
 
+/* Site Footer */
+@import 'footer';
+
 * {
     box-sizing: border-box;
 }
@@ -28,6 +31,13 @@
   padding-top: 200px;
 }
 
+.no_margin_vertical {
+  margin: 0 auto !important;
+}
+
+.top_space {
+  min-height: 200px;
+}
 .copyright {
   background-color: $darker-grey;
   color: $light-grey;

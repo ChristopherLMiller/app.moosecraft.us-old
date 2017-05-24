@@ -24,21 +24,21 @@ const HomePage = () => (
 
     <div className={classNames(styles.container, styles.box_width)}>
       <div className={styles.row}>
-        <Column title="66 Unique Players" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+        <Column title="66 Unique Players" width={styles.one_third} classes={classNames(styles.background_white, styles.box_shadow)}>
           <div className={styles.center}>
             <FontAwesome name="user" className={styles.text_grey} style={{ fontSize: '6em' }} />
             <p>Players that have joined the server</p>
           </div>
         </Column>
 
-        <Column title="894 Hours Played" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+        <Column title="894 Hours Played" width={styles.one_third} classes={classNames(styles.background_white, styles.box_shadow)}>
           <div className={styles.center}>
             <FontAwesome name="clock-o" className={styles.text_grey} style={{ fontSize: '6em' }} />
             <p>Hours of game play logged</p>
           </div>
         </Column>
 
-        <Column title="4495395 Meters" classes={classNames(styles.background_white, styles.box_shadow, styles.one_third)}>
+        <Column title="4495395 Meters" width={styles.one_third} classes={classNames(styles.background_white, styles.box_shadow)}>
           <div className={styles.center}>
             <FontAwesome name="line-chart" className={styles.text_grey} style={{ fontSize: '6em' }} />
             <p>How far players have traveled in game</p>
