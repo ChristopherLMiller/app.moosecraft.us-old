@@ -3,7 +3,7 @@
 // general layout component
 .container {
   margin: 0;
-  padding: 30px 50px;
+  padding: 0 0 50px 0;
 
   .full_width {
     width:100%;
@@ -15,7 +15,7 @@
 
   .row {
     max-width: $max-width;
-    margin: 50px auto;
+    margin: 0 auto;
     overflow: hidden;
     display: flex;
     flex-direction: column;
