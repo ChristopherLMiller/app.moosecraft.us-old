@@ -16,7 +16,7 @@ const HomePage = () => (
 
     <div className={classNames(styles.container, styles.full_width, styles.background_grey)}>
       <div className={styles.row}>
-        <Column classes={styles.one_full}>
+        <Column width={styles.one_full}>
           <PageTitle title="Welcome to Moosecraft" />
         </Column>
       </div>

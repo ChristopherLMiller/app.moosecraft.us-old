@@ -1,6 +1,6 @@
 import React from 'react';
 
-import header from 'src/styles/header.scss';
+import header from 'src/styles/front/header.scss';
 
 import NavigationBar from 'src/layout/navigation';
 

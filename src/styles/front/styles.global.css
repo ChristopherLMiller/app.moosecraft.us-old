@@ -1,0 +1,36 @@
+/* Insert site global styles here */
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+@import 'normalize.css';
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Lato, sans-serif;
+}
+
+main p {
+    font-family: Raleway, sans-serif;
+    letter-spacing: 1px;
+}
+main h1 {
+    margin: 10px 0;
+    font-size: 2em;
+}
+main h2 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+main h3 {
+    margin: 10px 0;
+    font-size: 1.25em;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 5s ease-in;
+}

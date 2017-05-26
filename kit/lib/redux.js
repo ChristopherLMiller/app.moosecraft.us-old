@@ -7,22 +7,27 @@ own reducers for store state outside of Apollo
 // ----------------------
 // IMPORTS
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import appReducer from 'src/redux/reducers';
 // ----------------------
 
 export default function createNewStore(apolloClient) {
+  const loggerMiddleware = createLogger();
+
+  const rootReducer = combineReducers({
+    apollo: apolloClient.reducer(),
+    app: appReducer,
+  });
+
   const store = createStore(
-    // By default, we'll use just the apollo reducer.  We can easily add our
-    // own here, for global store management outside of Apollo
-    combineReducers({
-      apollo: apolloClient.reducer(),
-    }),
+   rootReducer,
     // Initial server state, provided by the server.  Only relevant in the
     // browser -- on the server, we'll start with a blank object
     // eslint-disable-next-line no-underscore-dangle
     !SERVER ? window.__STATE__ : {}, // initial state
     compose(
-        applyMiddleware(apolloClient.middleware()),
+        applyMiddleware(apolloClient.middleware(), loggerMiddleware, thunkMiddleware),
         // Enable Redux Devtools on the browser, for easy state debugging
         // eslint-disable-next-line no-underscore-dangle
         (!SERVER && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,

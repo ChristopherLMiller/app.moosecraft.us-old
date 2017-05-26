@@ -1,0 +1,19 @@
+@import 'colors';
+@import 'constants';
+
+.copyright {
+  background-color: $darker-grey;
+  color: $light-grey;
+}
+
+.copyright p {
+  max-width: $max_width;
+  margin: 15px auto;
+  padding: 0 15px;
+}
+
+@media screen and (min-width: $max_width) {
+  .copyright p {
+    padding: 0;
+  }
+}

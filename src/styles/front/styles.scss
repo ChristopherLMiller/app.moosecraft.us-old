@@ -1,0 +1,149 @@
+@import 'colors';
+@import 'constants';
+@import 'functions';
+@import 'mixins';
+
+/* Site Navigation */
+@import 'navigation';
+
+/* Site Footer */
+@import 'footer';
+
+/* Copyright Bar */
+@import 'copyright';
+
+* {
+    box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.center {
+  text-align: center;
+}
+
+.padding {
+  padding: 10px;
+}
+
+.top_padding {
+  padding-top: 200px;
+}
+
+.no_margin_vertical {
+  margin: 0 auto !important;
+}
+
+.top_space {
+  min-height: 200px;
+}
+
+button {
+    background: $light-grey;
+    border: 0 !important;
+    padding: 10px 30px;
+    color: $white;
+    border-radius: 0;
+    outline: none;
+    cursor: pointer;
+}
+.green button {
+  background: $status_green;
+}
+.red button {
+  background: $status_red;
+}
+.yellow button {
+  background: $status_yellow;
+}
+
+
+
+.box_shadow {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.no_padding {
+  padding: 0 !important;
+}
+
+.hide_small {
+  display: none;
+}
+@media screen and (min-width: 675px) {
+  .hide_small {
+    display: block;
+  }
+}
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 5s ease-in;
+}
+
+.home navigation {
+  position: absolute;
+}
+
+.home navigation.fixed {
+  position: fixed;
+}
+
+main {
+  @include fluid-type($min_width, $max_width, $min_font, $max_font);
+  flex: 1 0 auto;
+  background: url('https://static.moosecraft.us/v2/img/sky.png') no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Background colors */
+.background_white {
+  background: $white;
+}
+.background_darker_grey {
+  background: $darker-grey;
+}
+.background_black {
+  background: $black;
+}
+.background_dark_grey {
+  background: $dark-grey;
+}
+.background_light_grey {
+  background: $light-grey;
+}
+.background_red {
+  background: $status_red;
+}
+.background_green {
+  background: $status_green;
+}
+.background_yellow {
+  background: $status_yellow;
+}
+.background_grey {
+  background: $grey;
+}
+
+/* Text Colors */
+.text_white {
+  color: $white;
+}
+.text_black {
+  color: $black;
+}
+.text_grey {
+  color: $grey;
+}
+
+/* Layout settings */
+@import 'layout';

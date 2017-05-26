@@ -1,10 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
-import * as firebase from 'firebase';
+import firebase from 'src/redux/firebase';
 
 import Column from 'src/layout/column';
-import { FIREBASE } from 'config/project';
 import Group from './group';
 
 import styles from 'src/styles/styles.scss';
@@ -20,8 +19,7 @@ class RulesPage extends React.Component {
   }
 
   componentWillMount() {
-    const firebaseApp = firebase.initializeApp(FIREBASE.config).database().ref('server-rules/categories');
-    firebaseApp.on('child_added', dataSnapshot => {
+    firebase.database().ref('server-rules/categories').on('child_added', dataSnapshot => {
       const list = this.state.rules;
       list.push(dataSnapshot.val());
       this.setState({
