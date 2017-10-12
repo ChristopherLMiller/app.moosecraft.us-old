@@ -1,0 +1,41 @@
+.no_margin_vertical {
+  margin: 0 auto !important;
+}
+.center {
+  text-align: center;
+}
+.padding {
+  padding: 10px;
+}
+.top_padding {
+  padding-top: 200px;
+}
+.side_padding {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.top_space {
+  min-height: 200px;
+}
+.no_padding {
+  padding: 0 !important;
+}
+.no_padding_bottom {
+  padding-bottom: 0;
+}
+.box_shadow {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.hide_small {
+  display: none;
+}
+@media screen and (min-width: 675px) {
+  .hide_small {
+    display: block;
+  }
+}
+
+.text_upper {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

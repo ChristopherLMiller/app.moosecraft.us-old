@@ -1,0 +1,29 @@
+@import '../../../../src/styles/colors.scss';
+@import '../../../../src/styles/constants.scss';
+
+footer {
+  background: $dark-grey;
+  color: $white;
+  z-index: 900;
+
+  .statusWidget {
+    button {
+      cursor: default;
+    }
+  }
+
+  h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bolder;
+    font-size: 28px;
+    text-align:center;
+  }
+
+  p {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+}
+

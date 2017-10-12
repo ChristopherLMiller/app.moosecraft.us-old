@@ -1,0 +1,51 @@
+$black: #000000;
+$white: #FFFFFF;
+$dark-grey: #222222;
+$darker-grey: #2F2F2F;
+$grey: #CCCCCC;
+$grey-lighter: #EEEEEE;
+$light-grey: #A5A5A5;
+$status_red: #691d1d;
+$status_green: #3e6b0a;
+$status_yellow: #69641d;
+$orange: #d08c0f;
+
+/* Background colors */
+.background_white {
+  background: $white;
+}
+.background_darker_grey {
+  background: $darker-grey;
+}
+.background_black {
+  background: $black;
+}
+.background_dark_grey {
+  background: $dark-grey;
+}
+.background_light_grey {
+  background: $light-grey;
+}
+.background_red {
+  background: $status_red;
+}
+.background_green {
+  background: $status_green;
+}
+.background_yellow {
+  background: $status_yellow;
+}
+.background_grey {
+  background: $grey;
+}
+
+/* Text Colors */
+.text_white {
+  color: $white;
+}
+.text_black {
+  color: $black;
+}
+.text_grey {
+  color: $grey;
+}

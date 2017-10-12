@@ -1,0 +1,12 @@
+@import '../../../styles/colors.scss';
+
+.interrupter {
+  background: $status_green;
+  color: $grey-lighter;
+  padding: 20px 0;
+  font-size: 1.5em;
+
+  h1 {
+    margin: 0 auto;
+  }
+}

@@ -6,27 +6,28 @@
 // ----------------------
 // IMPORTS
 
+/* NPM */
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
+// Chalk terminal library
+import chalk from 'chalk';
+
+/* Local */
+
+// Import console messages
+import { css, stats } from './common';
+import { logServerStarted } from '../lib/console';
+
+// Locla paths
 import PATHS from '../../config/paths';
 
 // ----------------------
 
 // Host and port settings to spawn the dev server on
-const HOST = 'localhost';
-const LOCAL = `http://${HOST}:8080`;
-
-// CSS loader options.  We want local modules, for all imports to be
-// recognised, and source maps enabled
-const cssLoader = {
-  loader: 'css-loader',
-  query: {
-    modules: true,
-    importLoaders: 1,
-    sourceMap: true,
-  },
-};
+const HOST = process.env.BROWSER_HOST || 'localhost';
+const PORT = process.env.BROWSER_PORT || 8080;
+const LOCAL = `http://${HOST}:${PORT}`;
 
 export default new WebpackConfig().extend({
   '[root]/browser.js': conf => {
@@ -39,27 +40,39 @@ export default new WebpackConfig().extend({
     );
 
     // Add React-specific hot loading
-    conf.module.loaders.find(l => l.test.toString() === /\.jsx?$/.toString())
-      .loaders.unshift({
+    conf.module.rules.find(l => l.test.toString() === /\.jsx?$/.toString())
+      .use.unshift({
         loader: 'react-hot-loader/webpack',
       });
 
     return conf;
   },
-}).merge({
-
-  // Add source maps
-  devtool: 'source-map',
+}, '[root]/dev.js').merge({
+  module: {
+    rules: [
+      // CSS loaders
+      ...css.getDevLoaders(),
+    ],
+  },
 
   // Dev server configuration
   devServer: {
 
-    // bind our dev server to `localhost`
+    // bind our dev server to the correct host and port
     host: HOST,
+    port: PORT,
 
     // link HTTP -> app/public, so static assets are being pulled from
-    // our source directory and not the not-yet-existent 'dist' folder
-    contentBase: PATHS.static,
+    // our source directory and not the `dist/public` we'd normally use in
+    // production.  Use `PATH.views` as a secondary source, for serving
+    // the /webpack.html fallback
+    contentBase: [
+      PATHS.static,
+      PATHS.views,
+    ],
+
+    // Enables compression to better represent build sizes
+    compress: true,
 
     // Assume app/public is the root of our dev server
     publicPath: '/',
@@ -71,69 +84,63 @@ export default new WebpackConfig().extend({
     // with no refreshes
     hot: true,
 
-    // Statistics on the build
-    stats: false,
+    // Disable build's information
+    noInfo: false,
+
+    // Show a full-screen overlay in the browser when there is a
+    // compiler error
+    overlay: true,
 
     // We're using React Router for all routes, so redirect 404s
     // back to the webpack-dev-server bootstrap HTML
     historyApiFallback: {
       index: '/webpack.html',
     },
-  },
 
-  module: {
-    loaders: [
-      // .css processing.  In development, styles are bundled into the
-      // resulting Javascript, instead of winding up in a separate file.
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          {
-            loader: 'postcss-loader',
-          },
-        ],
-      },
-      // SASS processing.  Same as .css, but parsed through `node-sass` first
-      {
-        test: /\.s(a|c)ss$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          'resolve-url-loader',
-          'sass-loader?sourceMap',
-        ],
-      },
-      // LESS processing.  Parsed through `less-loader` first
-      {
-        test: /\.less$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          'less-loader',
-        ],
-      },
-    ],
+    // Format output stats
+    stats,
   },
 
   // Extra output options, specific to the dev server -- source maps and
   // our public path
   output: {
-    sourceMapFilename: '[file].map',
     publicPath: `${LOCAL}/`,
   },
 
   plugins: [
+    // Log to console when `webpack-dev-server` has finished
+    {
+      apply(compiler) {
+        compiler.plugin('done', () => {
+          logServerStarted({
+            type: 'hot-reloading browser',
+            host: HOST,
+            port: PORT,
+            chalk: chalk.bgMagenta.white,
+            allowSSL: false,
+          });
+        });
+      },
+    },
+
     new webpack.NamedModulesPlugin(),
 
     // Activate the hot-reloader, so changes can be pushed to the browser
     new webpack.HotModuleReplacementPlugin(),
 
-    // Set NODE_ENV to 'development', in case we need verbose debug logs
+    // Global variables
     new webpack.DefinePlugin({
+      // We're not running on the server
+      SERVER: false,
       'process.env': {
+        // Point the server host/port to the dev server
+        HOST: JSON.stringify(process.env.HOST || 'localhost'),
+        PORT: JSON.stringify(process.env.PORT || '8081'),
+        SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+
+        // Debug development
         NODE_ENV: JSON.stringify('development'),
+        DEBUG: true,
       },
     }),
   ],

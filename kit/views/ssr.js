@@ -1,14 +1,15 @@
-/* eslint-disable react/no-danger */
+/* eslint-disable react/no-danger, no-return-assign, no-param-reassign */
 
 // Component to render the full HTML response in React
 
 // ----------------------
 // IMPORTS
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // ----------------------
 
-const Html = ({ head, html, state }) => (
+const Html = ({ head, scripts, window, css, children }) => (
   <html lang="en" prefix="og: http://ogp.me/ns#">
     <head>
       <meta charSet="utf-8" />
@@ -16,29 +17,28 @@ const Html = ({ head, html, state }) => (
       <meta httpEquiv="Content-Language" content="en" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {head.meta.toComponent()}
-      <link rel="stylesheet" href="/assets/css/style.css" />
-      <link type="text/plain" rel="author" href="https://static.moosecraft.us/v2/humans.txt" />
-      <link rel="manifest" href="https://static.moosecraft.us/v2/manifest.json" />
+      <link rel="stylesheet" href={css} />
       {head.title.toComponent()}
     </head>
-    <body {...head.bodyAttributes.toComponent()}>
-      <div
-        id="main"
-        dangerouslySetInnerHTML={{ __html: html }} />
+    <body>
+      <div id="main">{children}</div>
       <script
         dangerouslySetInnerHTML={{
-          __html: `window.__STATE__ = ${JSON.stringify(state)}`,
+          __html: Object.keys(window).reduce(
+            (out, key) => out += `window.${key}=${JSON.stringify(window[key])};`,
+            ''),
         }} />
-      <script defer src="/vendor.js" />
-      <script defer src="/browser.js" />
+      {scripts.map(src => <script key={src} src={src} />)}
     </body>
   </html>
 );
 
 Html.propTypes = {
   head: PropTypes.object.isRequired,
-  html: PropTypes.string.isRequired,
-  state: PropTypes.object.isRequired,
+  window: PropTypes.object.isRequired,
+  scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  css: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Html;

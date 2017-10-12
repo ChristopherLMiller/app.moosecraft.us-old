@@ -1,12 +1,32 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import config from 'kit/config';
+import App from 'src/view';
 
-import FrontEnd from 'src/pages/front-end';
-import BackEnd from 'src/pages/back-end';
+// Reducers
+import counterReducer from 'src/reducers/counter';
 
-export default () => (
-  <Switch>
-    <Route path="/admin" component={BackEnd} />
-    <Route path="/" component={FrontEnd} />
-  </Switch>
-);
+config.addReducer('counter', counterReducer, { count: 0 });
+config.enableGraphQLServer();
+
+/* SERVER */
+if (SERVER) {
+  /* GRAPHQL SCHEMA */
+  config.setGraphQLSchema(require('src/graphql/schema').default);
+
+  /* CUSTOM KOA APP INSTANTIATION */
+  config.getKoaApp(app => {
+    // eslint-disable-next-line no-param-reassign
+    app.context.engine = 'ReactQL';
+    app.on('error', e => {
+      // eslint-disable-next-line no-console
+      console.error('Server error:', e);
+    });
+  });
+
+  /* CUSTOM MIDDLEWARE */
+  config.addMiddleware(async (ctx, next) => {
+    ctx.set('Powered-By', ctx.engine); // <-- `ctx.engine` srt above!
+    return next();
+  });
+}
+
+export default App;

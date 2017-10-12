@@ -1,0 +1,12 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/buttons.scss';
+
+.green button {
+  background: $status_green;
+}
+.red button {
+  background: $status_red;
+}
+.yellow button {
+  background: $status_yellow;
+}

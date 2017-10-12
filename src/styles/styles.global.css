@@ -2,35 +2,79 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-@import 'normalize.css';
+@font-face {
+  font-family: 'minecraftia';
+  src: url('http://localhost:3000/v2/fonts/minecraftia-regular-webfont.woff2') format('woff2'),
+       url('http://localhost:3000/v2/fonts/minecraftia-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+}
+
+body {
+	overflow-x:hidden;
+}
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Lato, sans-serif;
+  font-family: Lato, sans-serif;
+  margin: 0;
+  padding: 10px 0;
 }
 
-main p {
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.75em;
+}
+h3 {
+  font-size: 1.5em;
+}
+h4 {
+  font-size: 1.25em;
+}
+
+p, ul, ol {
     font-family: Raleway, sans-serif;
     letter-spacing: 1px;
-}
-main h1 {
-    margin: 10px 0;
-    font-size: 2em;
-}
-main h2 {
-    margin: 10px 0;
-    font-size: 1.5em;
-}
-main h3 {
-    margin: 10px 0;
-    font-size: 1.25em;
+  }
+
+ul, ol {
+  list-style-position: inside;
 }
 
-.fade-enter {
-  opacity: 0;
-  z-index: 1;
+#main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.fade-enter.fade-enter-active {
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+  background: #EEEEEE;
+  color:#3E6B0A;
+}
+
+/* Home page specifics */
+.home nav {
+    position: absolute;
+    top: calc(100vh - 150px);
+    opacity: 0.8;
+}
+.home nav.sticky {
+  position: fixed;
+  top: 50px;
   opacity: 1;
-  transition: opacity 5s ease-in;
 }
+

@@ -1,0 +1,13 @@
+@import '../../../styles/colors.scss';
+
+.heading {
+  background: $status_green;
+  color: $grey-lighter;
+  padding: 40px 0;
+  margin-bottom: 40px;
+  font-size: 1.5em;
+
+  h1 {
+    margin: 0 auto;
+  }
+}

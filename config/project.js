@@ -1,11 +1,13 @@
+
 /* eslint-disable import/prefer-default-export */
 
-export const APOLLO = {
-  uri: 'https://api.graph.cool/simple/v1/cinomw2r1018601o42x5z69uc',
-};
+
+const assetURL = 'http://localhost:3000/v2';
 
 export const STATIC = {
-  img: 'https://static.moosecraft.us/v2/img',
+  img: `${assetURL}/img`,
+  root: `${assetURL}`,
+  fonts: `${assetURL}/fonts`,
 };
 
 export const FIREBASE = {

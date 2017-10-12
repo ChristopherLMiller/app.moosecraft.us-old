@@ -1,0 +1,102 @@
+@import '../../../styles/colors';
+@import '../../../styles/constants';
+
+.hero {
+  background: url($asset_url + '/img/hero-home.png') no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+
+  .sign {
+    width: 552px;
+    background: url($asset_url + '/img/sign.png') no-repeat;
+    background-size: cover;
+    padding-top: 425px;
+    transform: rotateZ(-13deg);
+    position: absolute;
+    top: -670px;
+    left: 95px;
+    transition: all 1s ease 0s;
+
+    &.show {
+      top: -185px;
+    }
+
+    .logo img {
+      width: 450px;
+      margin: 0 52px;
+      margin-bottom: 85px;
+      transition: all 0.5s ease 0s;
+
+      &:hover {
+        transform: rotateZ(-13deg);
+      }
+    }
+  }
+
+  .mob {
+    background: url($asset_url + '/img/creeper.png') no-repeat;
+    position: absolute;
+    right: -390px;
+    bottom: -30px;
+    width: 225px;
+    background-size: contain;
+    height: 500px;
+    transform: rotateZ(-50deg);
+    transition: right 1s ease 0s;
+
+    &:hover .talk_bubble {
+      display: inline-block;
+    }
+
+    .talk_bubble {
+      margin: 0;
+      display: none;
+      position: relative;
+      background-color: $white;
+      top: -170px;
+      right: 25px;
+      transform: rotateZ(24deg);
+      border: 8px solid $black;
+      border-radius: 30px;
+
+      &:before {
+        content: ' ';
+        position: absolute;
+        width: 0;
+        height: 0;
+        left: auto;
+        right: 30px;
+        bottom: -40px;
+        border: 20px solid;
+        border-color: $black $black transparent transparent;
+      }
+
+      &:after {
+        content: ' ';
+        position: absolute;
+        width: 0;
+        height: 0;
+        left: auto;
+        right: 38px;
+        bottom: -20px;
+        border: 12px solid;
+        border-color: $white $white transparent transparent;
+      }
+
+      .talktext {
+        padding: 1em;
+        text-align: left;
+        line-height: 1.5em;
+
+        p {
+          font-family: minecraftia;
+          font-size: 26px;
+          line-height: 32px;
+          -webkit-margin-before: 0em;
+          -webkit-margin-after: 0em;
+        }
+      }
+    }
+  }
+}

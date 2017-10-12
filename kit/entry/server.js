@@ -11,6 +11,19 @@
 // ----------------------
 // IMPORTS
 
+/* Node */
+
+// For pre-pending a `<!DOCTYPE html>` stream to the server response
+import { PassThrough } from 'stream';
+
+// HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
+// HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
+// for building both server types.
+import http from 'http';
+import https from 'https';
+
+/* NPM */
+
 // Patch global.`fetch` so that Apollo calls to GraphQL work
 import 'isomorphic-fetch';
 
@@ -30,14 +43,20 @@ import Koa from 'koa';
 // to await data being ready before rendering back HTML to the client
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 
+// Enforce SSL, if required
+import koaSSL from 'koa-sslify';
+
+// Enable cross-origin requests
+import koaCors from 'kcors';
+
+// Static file handler
+import koaSend from 'koa-send';
+
 // HTTP header hardening
 import koaHelmet from 'koa-helmet';
 
 // Koa Router, for handling URL requests
 import KoaRouter from 'koa-router';
-
-// Static file handler
-import koaStatic from 'koa-static';
 
 // High-precision timing, so we can debug response time to serve a request
 import ms from 'microseconds';
@@ -50,8 +69,20 @@ import { StaticRouter } from 'react-router';
 // title, meta info, etc along with the initial HTML
 import Helmet from 'react-helmet';
 
-// Grab the shared Apollo Client
-import { serverClient } from 'kit/lib/apollo';
+// Import the Apollo GraphQL server, for Koa
+import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
+
+// Allow local GraphQL schema querying when using a built-in GraphQL server
+import apolloLocalQuery from 'apollo-local-query';
+
+// Import all of the GraphQL lib, for use with our Apollo client connection
+import * as graphql from 'graphql';
+
+/* ReactQL */
+
+// App entry point.  This must come first, because app.js will set-up the
+// server config that we'll use later
+import App from 'src/app';
 
 // Custom redux store creator.  This will allow us to create a store 'outside'
 // of Apollo, so we can apply our own reducers and make use of the Redux dev
@@ -61,8 +92,12 @@ import createNewStore from 'kit/lib/redux';
 // Initial view to send back HTML render
 import Html from 'kit/views/ssr';
 
-// App entry point
-import App from 'src/app';
+// Grab the shared Apollo Client / network interface instantiation
+import { getNetworkInterface, createClient } from 'kit/lib/apollo';
+
+// App settings, which we'll use to customise the server -- must be loaded
+// *after* app.js has been called, so the correct settings have been set
+import config from 'kit/config';
 
 // Import paths.  We'll use this to figure out where our public folder is
 // so we can serve static files
@@ -70,100 +105,310 @@ import PATHS from 'config/paths';
 
 // ----------------------
 
-// Port to bind to.  Takes this from the `PORT` environment var, or assigns
-// to 4000 by default
-const PORT = process.env.PORT || 4000;
+// Create a network layer based on settings.  This is an immediate function
+// that binds either the `localInterface` function (if there's a built-in
+// GraphQL) or `externalInterface` (if we're pointing outside of ReactQL)
+const createNeworkInterface = (() => {
+  // For a local interface, we want to allow passing in the request's
+  // context object, which can then feed through to our GraphQL queries to
+  // extract pertinent information and manipulate the response
+  function localInterface(context) {
+    return apolloLocalQuery.createLocalInterface(
+      graphql,
+      config.graphQLSchema,
+      {
+        // Attach the request's context, which certain GraphQL queries might
+        // need for accessing cookies, auth headers, etc.
+        context,
+      },
+    );
+  }
 
-// Run the server
-(async function server() {
-  // Set up routes
-  const router = (new KoaRouter())
-    // Set-up a general purpose /ping route to check the server is alive
-    .get('/ping', async ctx => {
-      ctx.body = 'pong';
-    })
+  function externalInterface() {
+    return getNetworkInterface(config.graphQLEndpoint);
+  }
 
-    // Everything else is React
-    .get('/*', async ctx => {
-      const route = {};
+  return config.graphQLServer ? localInterface : externalInterface;
+})();
 
-      // Create a new server Apollo client for this request
-      const client = serverClient();
+// Static file middleware
+export function staticMiddleware() {
+  return async function staticMiddlewareHandler(ctx, next) {
+    try {
+      if (ctx.path !== '/') {
+        return await koaSend(
+          ctx,
+          ctx.path,
+          process.env.NODE_ENV === 'production' ? {
+            root: PATHS.public,
+            immutable: true,
+          } : {
+            root: PATHS.distDev,
+          },
+        );
+      }
+    } catch (e) { /* Errors will fall through */ }
+    return next();
+  };
+}
 
-      // Create a new Redux store for this request
-      const store = createNewStore(client);
+// Function to create a React handler, per the environment's correct
+// manifest files
+export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
+  return async function reactHandler(ctx) {
+    const routeContext = {};
 
-      // Generate the HTML from our React tree.  We're wrapping the result
-      // in `react-router`'s <StaticRouter> which will pull out URL info and
-      // store it in our empty `route` object
-      const components = (
-        <StaticRouter location={ctx.request.url} context={route}>
-          <ApolloProvider store={store} client={client}>
-            <App />
-          </ApolloProvider>
-        </StaticRouter>
-      );
+    // Generate the HTML from our React tree.  We're wrapping the result
+    // in `react-router`'s <StaticRouter> which will pull out URL info and
+    // store it in our empty `route` object
+    const components = (
+      <StaticRouter location={ctx.request.url} context={routeContext}>
+        <ApolloProvider store={ctx.store} client={ctx.apollo}>
+          <App />
+        </ApolloProvider>
+      </StaticRouter>
+    );
 
-      // Wait for GraphQL data to be available in our initial render,
-      // before dumping HTML back to the client
-      await getDataFromTree(components);
+    // Wait for GraphQL data to be available in our initial render,
+    // before dumping HTML back to the client
+    await getDataFromTree(components);
 
-      // Full React HTML render
-      const html = ReactDOMServer.renderToString(components);
+    // Handle redirects
+    if ([301, 302].includes(routeContext.status)) {
+      // 301 = permanent redirect, 302 = temporary
+      ctx.status = routeContext.status;
 
-      // Render the view with our injected React data.  We'll pass in the
-      // Helmet component to generate the <head> tag, as well as our Redux
-      // store state so that the browser can continue from the server
-      ctx.body = `<!DOCTYPE html>\n${ReactDOMServer.renderToStaticMarkup(
-        <Html
-          html={html}
-          head={Helmet.rewind()}
-          state={store.getState()} />,
-      )}`;
-    });
+      // Issue the new `Location:` header
+      ctx.redirect(routeContext.url);
 
-  // Start Koa
-  (new Koa())
+      // Return early -- no need to set a response body
+      return;
+    }
 
-    // Preliminary security for HTTP headers
-    .use(koaHelmet())
+    // Handle 404 Not Found
+    if (routeContext.status === 404) {
+      // By default, just set the status code to 404.  Or, we can use
+      // `config.set404Handler()` to pass in a custom handler func that takes
+      // the `ctx` and store
 
-    // Error wrapper.  If an error manages to slip through the middleware
-    // chain, it will be caught and logged back here
-    .use(async (ctx, next) => {
-      try {
-        await next();
-      } catch (e) {
-        // TODO we've used rudimentary console logging here.  In your own
-        // app, I'd recommend you implement third-party logging so you can
-        // capture errors properly
-        console.log('Error', e.message);
+      if (config.handler404) {
+        config.handler404(ctx);
+
+        // Return early -- no need to set a response body, because that should
+        // be taken care of by the custom 404 handler
+        return;
+      }
+
+      ctx.status = routeContext.status;
+    }
+
+    // Create a HTML stream, to send back to the browser
+    const htmlStream = new PassThrough();
+
+    // Prefix the doctype, so the browser knows to expect HTML5
+    htmlStream.write('<!DOCTYPE html>');
+
+    // Create a stream of the React render. We'll pass in the
+    // Helmet component to generate the <head> tag, as well as our Redux
+    // store state so that the browser can continue from the server
+    const reactStream = ReactDOMServer.renderToNodeStream(
+      <Html
+        head={Helmet.rewind()}
+        window={{
+          webpackManifest: chunkManifest,
+          __STATE__: ctx.store.getState(),
+        }}
+        css={css}
+        scripts={scripts}>
+        {components}
+      </Html>,
+    );
+
+    // Pipe the React stream to the HTML output
+    reactStream.pipe(htmlStream);
+
+    // Set the return type to `text/html`, and stream the response back to
+    // the client
+    ctx.type = 'text/html';
+    ctx.body = htmlStream;
+  };
+}
+
+// Build the router, based on our app's settings.  This will define which
+// Koa route handlers
+const router = (new KoaRouter())
+  // Set-up a general purpose /ping route to check the server is alive
+  .get('/ping', async ctx => {
+    ctx.body = 'pong';
+  })
+
+  // Favicon.ico.  By default, we'll serve this as a 204 No Content.
+  // If /favicon.ico is available as a static file, it'll try that first
+  .get('/favicon.ico', async ctx => {
+    ctx.res.statusCode = 204;
+  });
+
+// Build the app instance, which we'll use to define middleware for Koa
+// as a precursor to handling routes
+const app = new Koa()
+  // Adds CORS config
+  .use(koaCors(config.corsOptions))
+
+  // Preliminary security for HTTP headers
+  .use(koaHelmet())
+
+  // Error wrapper.  If an error manages to slip through the middleware
+  // chain, it will be caught and logged back here
+  .use(async (ctx, next) => {
+    try {
+      await next();
+    } catch (e) {
+      // If we have a custom error handler, use that - else simply log a
+      // message and return one to the user
+      if (typeof config.errorHandler === 'function') {
+        config.errorHandler(e, ctx, next);
+      } else {
+        console.log('Error:', e.message);
         ctx.body = 'There was an error. Please try again later.';
       }
-    })
+    }
+  })
 
-    // It's useful to see how long a request takes to respond.  Add the
-    // timing to a HTTP Response header
-    .use(async (ctx, next) => {
-      const start = ms.now();
-      await next();
-      const end = ms.parse(ms.since(start));
-      const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
-      ctx.set('Response-Time', `${total / 1e3}ms`);
-    })
+  // It's useful to see how long a request takes to respond.  Add the
+  // timing to a HTTP Response header
+  .use(async (ctx, next) => {
+    const start = ms.now();
+    await next();
+    const end = ms.parse(ms.since(start));
+    const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
+    ctx.set('Response-Time', `${total / 1e3}ms`);
+  })
 
-    // Serve static files from our dist/public directory, which is where
-    // the compiled JS, images, etc will wind up
-    .use(koaStatic(PATHS.public, {
-      // Don't defer to middleware.  If we have a file, serve it immediately
-      defer: false,
-    }))
+  // Create a new Apollo client and Redux store per request.  This will be
+  // stored on the `ctx` object, making it available for the React handler or
+  // any subsequent route/middleware
+  .use(async (ctx, next) => {
+    // Create a new server Apollo client for this request
+    ctx.apollo = createClient({
+      ssrMode: true,
+      // Create a network request.  If we're running an internal server, this
+      // will be a function that accepts the request's context, to feed through
+      // to the GraphQL schema
+      networkInterface: createNeworkInterface(ctx),
+    });
 
-    // If the requests makes it here, we'll assume they need to be handled
-    // by the router
-    .use(router.routes())
-    .use(router.allowedMethods())
+    // Create a new Redux store for this request
+    ctx.store = createNewStore(ctx.apollo);
 
-    // Bind to the specified port
-    .listen(PORT);
-}());
+    // Pass to the next middleware in the chain: React, custom middleware, etc
+    return next();
+  });
+
+/* FORCE SSL */
+
+// Middleware to re-write HTTP requests to SSL, if required.
+if (config.enableForceSSL) {
+  app.use(koaSSL(config.enableForceSSL));
+}
+
+// Attach custom middleware
+config.middleware.forEach(middlewareFunc => app.use(middlewareFunc));
+
+// Attach an internal GraphQL server, if we need one
+if (config.graphQLServer) {
+  // Attach the GraphQL schema to the server, and hook it up to the endpoint
+  // to listen to POST requests
+  router.post(
+    config.graphQLEndpoint,
+    graphqlKoa(context => ({
+      // Bind the current request context, so it's accessible within GraphQL
+      context,
+      // Attach the GraphQL schema
+      schema: config.graphQLSchema,
+    })),
+  );
+}
+
+// Do we need the GraphiQL query interface?  This can be used if we have an
+// internal GraphQL server, or if we're pointing to an external server.  First,
+// we check if `config.graphiql` === `true` to see if we need one...
+
+if (config.graphiQL) {
+  // The GraphiQL endpoint default depends on this order of precedence:
+  // explicit -> internal GraphQL server endpoint -> /graphql
+  let graphiQLEndpoint;
+
+  if (typeof config.graphiQL === 'string') {
+    // Since we've explicitly passed a string, we'll use that as the endpoint
+    graphiQLEndpoint = config.graphiQL;
+  } else if (config.graphQLServer) {
+    // If we have an internal GraphQL server, AND we haven't set a string,
+    // the default GraphiQL path should be the same as the server endpoint
+    graphiQLEndpoint = config.graphQLEndpoint;
+  } else {
+    // Since we haven't set anything, AND we don't have an internal server,
+    // by default we'll use `/graphql` which will work for an external server
+    graphiQLEndpoint = '/graphql';
+  }
+
+  router.get(
+    graphiQLEndpoint,
+    graphiqlKoa({
+      endpointURL: config.graphQLEndpoint,
+    }),
+  );
+}
+
+// Attach any custom routes we may have set in userland
+config.routes.forEach(route => {
+  router[route.method](route.route, ...route.handlers);
+});
+
+/* BODY PARSING */
+
+// `koa-bodyparser` is used to process POST requests.  Check that it's enabled
+// (default) and apply a custom config if we need one
+if (config.enableBodyParser) {
+  app.use(require('koa-bodyparser')(
+    // Pass in any options that may have been set in userland
+    config.bodyParserOptions,
+  ));
+}
+
+/* CUSTOM APP INSTANTIATION */
+
+// Pass the `app` to do anything we need with it in userland. Useful for
+// custom instantiation that doesn't fit into the middleware/route functions
+if (typeof config.koaAppFunc === 'function') {
+  config.koaAppFunc(app);
+}
+
+// Listener function that will start http(s) server(s) based on userland
+// config and available ports
+const listen = () => {
+  // Spawn the listeners.
+  const servers = [];
+
+  // Plain HTTP
+  if (config.enableHTTP) {
+    servers.push(
+      http.createServer(app.callback()).listen(process.env.PORT),
+    );
+  }
+
+  // SSL -- only enable this if we have an `SSL_PORT` set on the environment
+  if (process.env.SSL_PORT) {
+    servers.push(
+      https.createServer(config.sslOptions, app.callback()).listen(process.env.SSL_PORT),
+    );
+  }
+
+  return servers;
+};
+
+// Export everything we need to run the server (in dev or prod)
+export default {
+  router,
+  app,
+  listen,
+};

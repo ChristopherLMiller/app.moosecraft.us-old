@@ -23,6 +23,9 @@ module.exports = {
   // Webpack configuration files
   webpack: path.join(root, 'kit', 'webpack'),
 
+  // Views for internal use
+  views: path.join(root, 'kit', 'views'),
+
   // Source path; where we'll put our application files
   src: path.join(root, 'src'),
 
@@ -32,6 +35,9 @@ module.exports = {
 
   // Dist path; where bundled assets will wind up
   dist: path.join(root, 'dist'),
+
+  // Dist path for development; where dev assets will wind up
+  distDev: path.resolve(root, 'dist', 'dev'),
 
   // Public.  This is where our web server will start looking to serve
   // static files from

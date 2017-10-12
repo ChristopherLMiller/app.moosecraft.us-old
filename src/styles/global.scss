@@ -1,0 +1,11 @@
+@import 'mixins';
+@import 'functions';
+@import 'constants';
+
+main {
+  @include fluid-type($min_width, $max_width, $min_font, $max_font);
+  flex: 1 0 auto;
+  background: url($asset_url + '/img/sky.png') no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}

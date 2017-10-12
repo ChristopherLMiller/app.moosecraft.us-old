@@ -6,18 +6,14 @@
 // ----------------------
 // IMPORTS
 
-// Node's built-in `path` module.  We'll use this to determine the entry
-// `browser.js` entry point
+/* Node */
 import path from 'path';
 
-// Webpack 2 is our bundler of choice.
+/* NPM */
 import webpack from 'webpack';
-
-// We'll use `webpack-config` to extend the base config we've already created
 import WebpackConfig from 'webpack-config';
 
-// other plug-ins
-// import CopyWebpackPlugin from 'copy-webpack-plugin';
+/* Local */
 
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
@@ -36,8 +32,6 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
     ],
   },
 
-  devtool: 'cheap-module-source-map',
-
   // Set-up some common mocks/polyfills for features available in node, so
   // the browser doesn't balk when it sees this stuff
   node: {
@@ -49,12 +43,12 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
 
   // Modules specific to our browser bundle
   module: {
-    loaders: [
+    rules: [
       // .js(x) loading
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
+        use: [
           {
             loader: 'babel-loader',
             query: {
@@ -65,16 +59,19 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
                 ['env', {
                   // Enable tree-shaking by disabling commonJS transformation
                   modules: false,
-                  // By default, target only modern browsers
-                  targets: {
-                    browsers: 'last 3 versions',
-                  },
+                  // Exclude default regenerator-- we want to enable async/await
+                  // so we'll do that with a dedicated plugin
+                  exclude: ['transform-regenerator'],
                 }],
                 // Transpile JSX code
                 'react',
               ],
               plugins: [
+                'transform-object-rest-spread',
                 'syntax-dynamic-import',
+                'transform-regenerator',
+                'transform-class-properties',
+                'transform-decorators-legacy',
               ],
             },
           },
@@ -89,27 +86,9 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: module => (
-         // this assumes your vendor imports exist in the node_modules directory
-         module.context && module.context.indexOf('node_modules') !== -1
+        // this assumes your vendor imports exist in the node_modules directory
+        module.context && module.context.indexOf('node_modules') !== -1
       ),
     }),
-
-    // Create a `SERVER` constant that's false in the browser-- we'll use this to
-    // determine whether we're running on a Node server and set this to true
-    // in the server.js config
-    new webpack.DefinePlugin({
-      SERVER: false,
-    }),
-
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: PATHS.public,
-    //     force: true, // This flag forces overwrites
-    //   },
-    // ], {
-    //   ignore: [
-    //     '*.html', // Ignore static HTML (which we'll use to bootstrap webpack)
-    //   ],
-    // }),
   ],
 });

@@ -1,0 +1,13 @@
+@import '../../../styles/colors';
+@import '../../../styles/constants';
+
+.copyright {
+  background-color: $darker-grey;
+  color: $light-grey;
+}
+
+.copyright p {
+  max-width: $max_width;
+  margin: 0 auto;
+  padding: 15px;
+}
