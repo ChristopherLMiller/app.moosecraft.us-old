@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import layout from 'src/styles/layout.scss';
 import misc from 'src/styles/misc.scss';
 
-const Column = ({ title, width, classes, children }) => {
+const Column = ({ title, width, classes, icon, children }) => {
   if (title) {
     return (
       <div className={classNames(layout.column_base, width, classes)}>
@@ -30,12 +30,14 @@ Column.propTypes = {
   title: PropTypes.string,
   width: PropTypes.string.isRequired,
   classes: PropTypes.string,
+  icon: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
 };
 
 Column.defaultProps = {
   title: null,
   classes: null,
+  icon: null,
   children: null,
 };
 

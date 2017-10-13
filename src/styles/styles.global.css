@@ -1,14 +1,7 @@
 /* Insert site global styles here */
 @import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
-@font-face {
-  font-family: 'minecraftia';
-  src: url('http://localhost:3000/v2/fonts/minecraftia-regular-webfont.woff2') format('woff2'),
-       url('http://localhost:3000/v2/fonts/minecraftia-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('http://localhost:3000/v2/css/hamburgers.min.css');
 
 * {
   box-sizing: border-box;
@@ -66,11 +59,13 @@ main h6 {
   color:#3E6B0A;
 }
 
-/* Home page specifics */
 .home nav {
     position: absolute;
     top: calc(100vh - 150px);
     opacity: 0.8;
+  }
+.home main {
+  padding-top: 0;
 }
 .home nav.sticky {
   position: fixed;

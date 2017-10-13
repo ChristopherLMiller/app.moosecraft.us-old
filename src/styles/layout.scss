@@ -33,7 +33,7 @@
 }
 
 .column_base {
-  margin: 40px;
+  margin: 20px;
 }
 
 .one_half, .one_third, .two_third, .one_fourth, .one_full {
@@ -56,6 +56,10 @@
   }
   .one_full {
     flex-basis: 100%;
+  }
+
+  .column_base {
+    margin: 40px;
   }
 }
 

@@ -1,13 +1,66 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/constants.scss';
 
 .heading {
-  background: $status_green;
-  color: $grey-lighter;
-  padding: 40px 0;
-  margin-bottom: 40px;
-  font-size: 1.5em;
+  margin: 0 20px;
+  text-align: center;
+  border: 15px solid $brown;
+  background: $tan;
+  padding: 30px 0;
+  position: relative;
 
-  h1 {
-    margin: 0 auto;
+  .title, .subtext {
+    background: none !important;
+    color: $orange;
+    font-weight: 800;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: rgba(47, 47, 47, 0.5);
+  }
+
+  .title {
+    font-size: 3em;
+  }
+  .subtext {
+    text-decoration: underline;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    width: 165px;
+    height: 45px;
+    top: 15%;
+    content: '\A';
+    border-bottom: 35px solid $brown;
+    border-top: 35px solid $brown;
+  }
+
+  &::before {
+    left: -165px;
+  }
+
+  &::after {
+    right: -165px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .heading {
+    margin: 0 75px;
+    padding: 50px 0;
+  }
+  &::before,
+  &::after {
+    top: 20%;
+  }
+}
+@media screen and (min-width: $mobile-breakpoint) {
+  .heading {
+    margin: 0 150px;
+    padding: 100px 0;
+
+    &::before,
+    &::after {
+      height: 125px;
+    }
   }
 }

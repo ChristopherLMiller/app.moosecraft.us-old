@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import SiteLogo from 'src/components/component/siteLogo';
@@ -6,44 +7,36 @@ import { STATIC } from 'config/project';
 
 import styles from './style.scss';
 
+@connect(state => ({ menu: state.menu[0] }))
 class NavigationBar extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      menu: [],
-    };
-  }
-
   render() {
+    let menuItems;
+    if (this.props.menu !== undefined) {
+      menuItems = this.props.menu.map(item => {
+        let inner;
+        if (item.children) {
+          const subItems = item.children.map(subItem => (
+            <li key={subItem.text}><NavLink to={subItem.link}>{subItem.text}</NavLink></li>
+          ));
+
+          inner = <li key={item.text}><span className={styles.label}>{item.text}</span><ul className={styles.subNavigation}>{subItems}</ul></li>;
+        } else {
+          inner = <li key={item.text}><NavLink to={item.link}><span className={styles.label}>{item.text}</span></NavLink></li>;
+        }
+
+        return (
+          inner
+        );
+      });
+    }
+
     return (
       <nav id="nav">
         <div className={styles.logoWrapper}>
           <SiteLogo linkTo="/"><img className={styles.logo} alt="logo" src={`${STATIC.img}/logo.png`} /></SiteLogo>
         </div>
         <ul className={styles.topLevel}>
-          <li><NavLink to="/join"><span className={styles.label}>Join</span></NavLink></li>
-          <li><span className={styles.label}>About Us</span>
-            <ul className={styles.subNavigation}>
-              <li><NavLink to="/about-us/rules">Rules</NavLink></li>
-              <li><NavLink to="/about-us/ranks">Ranks</NavLink></li>
-              <li><NavLink to="/about-us/commands">Commands</NavLink></li>
-              <li><NavLink to="/about-us/history">History</NavLink></li>
-              <li><NavLink to="/about-us/who-we-are">Who We Are</NavLink></li>
-              <li><NavLink to="/about-us/goals">Goals</NavLink></li>
-              <li><NavLink to="/about-us/blog">Blog</NavLink></li>
-            </ul>
-          </li>
-          <li><span className={styles.label}>Stats</span>
-            <ul className={styles.subNavigation}>
-              <li><NavLink to="/stats/server">Server</NavLink></li>
-              <li><NavLink to="/stats/players">Player</NavLink></li>
-              <li><a href="https://dynmap.moosecraft.us">Live Map</a></li>
-            </ul>
-          </li>
-          <li><NavLink to="/gallery"><span className={styles.label}>Gallery</span></NavLink></li>
-          <li><NavLink to="/forums"><span className={styles.label}>Forums</span></NavLink></li>
-          <li><NavLink to="/contact"><span className={styles.label}>Contact</span></NavLink></li>
+          {menuItems}
           <li><span className={styles.label}>(C)</span></li>
           <li><span className={styles.label}>(P)</span></li>
         </ul>

@@ -2,16 +2,16 @@ import config from 'kit/config';
 import App from 'src/view';
 
 // Reducers
-import counterReducer from 'src/reducers/counter';
+import menuReducer from 'src/reducers/menu';
+import serverRulesReducer from 'src/reducers/server-rules';
 
-config.addReducer('counter', counterReducer, { count: 0 });
+config.addReducer('menu', menuReducer);
+config.addReducer('serverRules', serverRulesReducer);
+
 config.enableGraphQLServer();
 
 /* SERVER */
 if (SERVER) {
-  /* GRAPHQL SCHEMA */
-  config.setGraphQLSchema(require('src/graphql/schema').default);
-
   /* CUSTOM KOA APP INSTANTIATION */
   config.getKoaApp(app => {
     // eslint-disable-next-line no-param-reassign

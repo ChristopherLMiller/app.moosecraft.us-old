@@ -1,0 +1,32 @@
+@import '../../../styles/colors.scss';
+
+.accordian_container {
+  list-style-type: none;
+  padding: 0;
+
+  .accordian {
+    margin-bottom: 20px;
+
+    button {
+      max-width: 100%;
+      margin: 0;
+      background: $status_green;
+      outline: none;
+      text-align: left;
+    }
+
+    .panel {
+      background: rgba(105, 100, 29, 0.5);
+      transition: all 0.8s;
+      transform-origin: top;
+      overflow: hidden;
+      height: auto;
+
+      p {
+        margin: 20px;
+        color: $grey-lighter;
+      }
+    }
+  }
+}
+
