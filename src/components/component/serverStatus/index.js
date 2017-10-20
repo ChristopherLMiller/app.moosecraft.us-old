@@ -48,16 +48,16 @@ class ServerStatus extends React.PureComponent {
   }
 
   async loadStatus() {
-    let result;
+    let response;
     try {
       // eslint-disable-next-line compat/compat
-      result = await fetch(`https://api.moosecraft.us/api/server/status/${this.props.server}`);
+      response = this.updateState(await fetch(`//api.moosecraft.us/api/server/status/${this.props.server}`));
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.log(`Server Status failed to fetch: ${this.props.server}`);
     }
 
-    return this.updateState(result);
+    return response;
   }
 
   render() {

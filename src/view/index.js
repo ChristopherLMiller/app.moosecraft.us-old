@@ -5,7 +5,7 @@ import FrontEnd from 'src/view/frontend';
 import BackEnd from 'src/view/backend';
 
 /* App */
-export default () => (
+export default() => (
   <Switch>
     <Route path="/admin" component={BackEnd} />
     <Route path="/" component={FrontEnd} />

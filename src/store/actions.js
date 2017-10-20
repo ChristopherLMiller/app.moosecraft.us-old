@@ -5,9 +5,9 @@ export function addMenuItem(item) {
   };
 }
 
-export function addServerRule(item) {
+export function addServerRuleCategory(item) {
   return {
-    type: 'ADD_SERVER_RULE',
+    type: 'ADD_SERVER_RULE_CATEGORY',
     item,
   };
 }

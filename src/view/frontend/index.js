@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import ScrollMemory from 'react-router-scroll-memory';
 import { connect } from 'react-redux';
 
+import config from 'kit/config';
 import Header from 'src/components/layout/header';
 import Routes from 'src/view/frontend/routes';
 import Footer from 'src/components/layout/footer';
@@ -12,14 +13,19 @@ import { STATIC } from 'config/project';
 
 import { addMenuItem } from 'src/store/actions';
 
+import menuReducer from 'src/reducers/menu';
+
+
 import 'src/styles/styles.global.css';
 import 'src/styles/global.scss';
+
+config.addReducer('menu', menuReducer);
 
 @connect()
 class FrontEnd extends React.PureComponent {
   componentWillMount() {
     const itemsRef = firebase.database().ref('menu');
-    itemsRef.on('value', snapshot => {
+    itemsRef.on('child_added', snapshot => {
       this.props.dispatch(addMenuItem(snapshot.val()));
     });
   }

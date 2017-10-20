@@ -7,11 +7,18 @@ import { STATIC } from 'config/project';
 
 import styles from './style.scss';
 
-@connect(state => ({ menu: state.menu[0] }))
+@connect(state => ({ menu: state.menu }))
 class NavigationBar extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+    };
+  }
+
   render() {
     let menuItems;
-    if (this.props.menu !== undefined) {
+    if (this.props.menu !== undefined && Array.isArray(this.props.menu)) {
       menuItems = this.props.menu.map(item => {
         let inner;
         if (item.children) {
@@ -37,7 +44,7 @@ class NavigationBar extends React.PureComponent {
         </div>
         <ul className={styles.topLevel}>
           {menuItems}
-          <li><span className={styles.label}>(C)</span></li>
+          <li><span className={styles.label}>(C)</span></li>{/* Chat popup */}
           <li><span className={styles.label}>(P)</span></li>
         </ul>
       </nav>

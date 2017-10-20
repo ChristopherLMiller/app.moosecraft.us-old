@@ -47,10 +47,11 @@
   .heading {
     margin: 0 75px;
     padding: 50px 0;
-  }
-  &::before,
-  &::after {
-    top: 20%;
+
+    &::before,
+    &::after {
+      top: 20%;
+    }
   }
 }
 @media screen and (min-width: $mobile-breakpoint) {

@@ -3,48 +3,42 @@ import classNames from 'classnames';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
+import config from 'kit/config';
 import Column from 'src/components/layout/column';
 import Heading from 'src/components/component/heading';
 import firebase from 'src/firebase/firebase';
 import { Accordian, Panel } from 'src/components/component/accordian';
 
-import { addServerRule } from 'src/store/actions';
+import serverRulesReducer from 'src/reducers/server-rules';
+import { addServerRuleCategory } from 'src/store/actions';
 
 import misc from 'src/styles/misc.scss';
 import layout from 'src/styles/layout.scss';
 import colors from 'src/styles/colors.scss';
 
-@connect(state => ({ rules: state.serverRules[0] }))
+config.addReducer('serverRules', serverRulesReducer, { categories: {} });
+
+@connect(state => ({ categories: state.serverRules.categories }))
 class Rules extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.showPanel = this.showPanel.bind(this);
-    this.state = {
-      isVisible: false,
-    };
-  }
   componentDidMount() {
-    const fbRef = firebase.database().ref('server-rules');
-    fbRef.on('value', snapshot => {
-      this.props.dispatch(addServerRule(snapshot.val()));
+    const firebaseRef = firebase.database().ref('server-rules/categories');
+    const dict = {};
+    firebaseRef.once('value', snapshot => {
+      snapshot.forEach(item => {
+        dict[item.key] = item.val();
+      });
+      this.props.dispatch(addServerRuleCategory(dict));
     });
   }
 
-  showPanel(e) {
-    this.setState = {
-      isVisible: !this.state.isVisible,
-    };
-    console.log('ive been clicked');
-  }
-
   render() {
-    let categories;
+    let categoriesNodes;
 
     // check ensures that the firebase data has been fetched to act upon
-    if (this.props.rules !== undefined) {
+    if (this.props.categories !== undefined) {
       // map of categories
-      categories = Object.keys(this.props.rules.categories).map(key => {
-        const category = this.props.rules.categories[key];
+      categoriesNodes = Object.keys(this.props.categories).map(key => {
+        const category = this.props.categories[key];
 
         // map the rules in each category
         const rules = Object.keys(category.rules).map(ruleKey => {
@@ -52,7 +46,7 @@ class Rules extends React.PureComponent {
 
           // rule object
           return (
-            <Panel title={rule.name}>
+            <Panel key={rule.name} title={rule.name}>
               <p>{rule.description}</p>
             </Panel>
           );
@@ -60,13 +54,13 @@ class Rules extends React.PureComponent {
 
         // category object
         return (
-          <Accordian title={category.name} icon={category.icon}>
+          <Accordian key={category.name} title={category.name} icon={category.icon}>
             {rules}
           </Accordian>
         );
       });
 
-      console.log(categories);
+      console.log(categoriesNodes);
     }
 
     return (
@@ -85,7 +79,7 @@ class Rules extends React.PureComponent {
             </Column>
           </div>
           <div className={layout.row}>
-            {categories}
+            {categoriesNodes}
           </div>
         </div>
 

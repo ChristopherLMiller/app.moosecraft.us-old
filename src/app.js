@@ -1,13 +1,6 @@
 import config from 'kit/config';
 import App from 'src/view';
 
-// Reducers
-import menuReducer from 'src/reducers/menu';
-import serverRulesReducer from 'src/reducers/server-rules';
-
-config.addReducer('menu', menuReducer);
-config.addReducer('serverRules', serverRulesReducer);
-
 config.enableGraphQLServer();
 
 /* SERVER */

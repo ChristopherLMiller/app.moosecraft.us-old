@@ -15,5 +15,8 @@ export const FIREBASE = {
     apiKey: 'AIzaSyDMV2TdQ2NcvmzEr7bUcQb5WWAGOVKkfXw',
     authDomain: 'moosecraft-d4515.firebaseio.com',
     databaseURL: 'https://moosecraft-d4515.firebaseio.com/',
+    projectId: 'moosecraft-d4515',
+    storageBucket: 'moosecraft-d4515.appspot.com',
+    messagingSenderId: '337406797942',
   },
 };

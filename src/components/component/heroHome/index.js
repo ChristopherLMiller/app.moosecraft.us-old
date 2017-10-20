@@ -11,8 +11,13 @@ class heroHome extends React.PureComponent {
     super(props);
     this.state = {
       isLoading: true,
+      mobVisible: true,
+      mobRight: '-390px',
+      mobText1: 'SSSssSSs',
+      mobText2: 'SsSsSsSS',
     };
     this.setLoaded = this.setLoaded.bind(this);
+    this.clickMob = this.clickMob.bind(this);
   }
 
   componentDidMount() {
@@ -20,7 +25,30 @@ class heroHome extends React.PureComponent {
   }
 
   setLoaded() {
-    this.setState({ isLoading: false });
+    this.setState({
+      isLoading: false,
+      mobVisible: true,
+      mobRight: '-80px',
+    });
+  }
+
+  clickMob() {
+    if (this.state.mobVisible) {
+      this.setState({
+        mobVisible: false,
+        mobRight: '-390px',
+        mobText1: 'BooOOomM',
+        mobText2: '!!!!!!!!!!!!!!!!!!!!!!',
+      });
+      setTimeout(() => {
+        this.setState({
+          mobVisible: true,
+          mobRight: '-80px',
+          mobText1: 'SSSssSSs',
+          mobText2: 'SsSsSsSS',
+        });
+      }, 2000);
+    }
   }
 
   render() {
@@ -31,10 +59,10 @@ class heroHome extends React.PureComponent {
             <Link to="/"><img alt="logo" src={`${STATIC.img}/logo.png`} /></Link>
           </div>
         </div>
-        <div className={styles.mob} style={!this.state.isLoading ? { right: '-80px' } : { right: '-390px' }}>
+        <div className={styles.mob} style={{ right: this.state.mobRight }} onClick={this.clickMob}>
           <div className={classNames(styles.talk_bubble)}>
             <div className={styles.talktext}>
-              <p>SSSssSSs<br />SsSsSsSS</p>
+              <p>{this.state.mobText1}<br />{this.state.mobText2}</p>
             </div>
           </div>
         </div>
